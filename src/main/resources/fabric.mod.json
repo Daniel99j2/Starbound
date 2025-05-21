@@ -3,23 +3,27 @@
 	"id": "starbound",
 	"version": "${version}",
 	"name": "Starbound",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A mod about harnessing the power of stars",
 	"authors": [
-		"Me!"
+		"Daniel99j"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/starboundmagic",
+		"sources": "https://github.com/Daniel99j2/Starbound"
 	},
+	"accessWidener": "starbound.accesswidener",
 	"license": "CC0-1.0",
 	"icon": "assets/starbound/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.danie99j.starbound.Starbound"
+			"com.daniel99j.starbound.Starbound"
 		],
 		"fabric-datagen": [
-			"com.danie99j.starbound.StarboundDataGenerator"
+			"com.daniel99j.starbound.StarboundDataGenerator"
+		],
+		"cardinal-components-entity": [
+			"com.daniel99j.starbound.misc.ModEntityComponents"
 		]
 	},
 	"mixins": [
@@ -31,7 +35,9 @@
 		"java": ">=21",
 		"fabric-api": "*"
 	},
-	"suggests": {
-		"another-mod": "*"
+	"custom": {
+		"cardinal-components": [
+			"starbound:player_data"
+		]
 	}
 }

@@ -1,4 +1,4 @@
-package com.danie99j.starbound.mixin;
+package com.daniel99j.starbound.mixin;
 
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

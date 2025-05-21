@@ -1,0 +1,21 @@
+{
+	"model": {
+		"type": "minecraft:select",
+		"cases": [
+			{
+				"model": {
+					"type": "minecraft:model",
+					"model": "starbound:item/casting_spell_gui"
+				},
+				"when": [
+					"gui"
+				]
+			}
+		],
+		"property": "minecraft:display_context",
+		"fallback": {
+			"type": "minecraft:model",
+			"model": "starbound:item/casting_spell"
+		}
+	}
+}
