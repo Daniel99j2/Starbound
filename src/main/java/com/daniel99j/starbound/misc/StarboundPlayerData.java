@@ -1,37 +1,19 @@
 package com.daniel99j.starbound.misc;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
+import com.daniel99j.starbound.spell.Spell;
+import com.daniel99j.starbound.spell.Spells;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
-import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.text.Text;
-import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class StarboundPlayerData implements Component, ServerTickingComponent {
-
     private final ServerPlayerEntity player;
+    @Nullable
+    private Spell last_cast_spell;
 
     public StarboundPlayerData(ServerPlayerEntity player) {
         this.player = player;
@@ -39,11 +21,28 @@ public class StarboundPlayerData implements Component, ServerTickingComponent {
     }
 
     public void readFromNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
+        if(nbt.contains("last_cast_spell")) {
+            last_cast_spell = Spells.getSpells().stream()
+                    .filter(spell -> spell.id.equals(nbt.get("last_cast_spell", Identifier.CODEC)
+                            .orElseThrow()))
+                    .findFirst()
+                    .orElseThrow();
+        }
     }
 
     public void writeToNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup wrapperLookup) {
+        if(last_cast_spell != null) nbt.put("last_cast_spell", Identifier.CODEC, last_cast_spell.id);
+        else nbt.remove("last_cast_spell");
     }
 
     public void serverTick() {
+    }
+
+    public @Nullable Spell getLastCastSpell() {
+        return last_cast_spell;
+    }
+
+    public void setLastCastSpell(@Nullable Spell last_cast_spell) {
+        this.last_cast_spell = last_cast_spell;
     }
 }

@@ -17,7 +17,7 @@ public interface PulsarPowered {
     default int getBeamPower(ServerWorld world) {
         BlockPos beaconPos = this.getBeamSourcePos();
         if (beaconPos != null) {
-            if(world.getBlockState(beaconPos).contains(ModBlocks.PULSAR_POWER)) return (int) (world.getBlockState(beaconPos).get(ModBlocks.PULSAR_POWER)*getPowerMultiplier());
+            if(world.getBlockState(beaconPos).contains(ModBlocks.PULSAR_POWER)) return (int) Math.floor(world.getBlockState(beaconPos).get(ModBlocks.PULSAR_POWER)*getPowerMultiplier());
         }
 
         return 0;

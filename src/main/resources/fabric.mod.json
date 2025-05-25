@@ -20,7 +20,7 @@
 			"com.daniel99j.starbound.Starbound"
 		],
 		"fabric-datagen": [
-			"com.daniel99j.starbound.StarboundDataGenerator"
+			"com.daniel99j.starbound.datagen.DataGenInit"
 		],
 		"cardinal-components-entity": [
 			"com.daniel99j.starbound.misc.ModEntityComponents"

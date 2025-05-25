@@ -16,6 +16,7 @@ prism lens - reflects lasers
 meteor crates - extract star energy
 
 spells
+xp level repair?
 possess mobs?
 lightning
 fire

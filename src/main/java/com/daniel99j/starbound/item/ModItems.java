@@ -6,12 +6,8 @@ import com.daniel99j.starbound.Starbound;
 import com.daniel99j.starbound.block.ModBlocks;
 import eu.pb4.factorytools.api.item.FactoryBlockItem;
 import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
-import eu.pb4.polymer.core.api.item.PolymerItemUtils;
-import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
-import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.EntityType;
@@ -30,7 +26,7 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class ModItems {
-    public static final Item CASTING_SPELL_ITEM = register("casting_spell", CastingSpellItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.TOOLTIP_DISPLAY, new TooltipDisplayComponent(true, new LinkedHashSet<>())));
+    public static final Item WAND_ITEM = register("wand", WandItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.TOOLTIP_DISPLAY, new TooltipDisplayComponent(true, new LinkedHashSet<>())));
     public static final Item PULSAR_REDIRECTOR_BLOCK = register(ModBlocks.PULSAR_REDIRECTOR);
     public static final Item PULSAR_TRANSMITTER_BLOCK = register(ModBlocks.PULSAR_TRANSMITTER);
 
@@ -123,7 +119,7 @@ public class ModItems {
         //use dev env as i might use the config on my client
         if(FabricLoader.getInstance().isDevelopmentEnvironment()) {
             PolymerItemGroupUtils.registerPolymerItemGroup(Identifier.of(Starbound.MOD_ID, "item_group"), ItemGroup.create(ItemGroup.Row.BOTTOM, -1)
-                    .icon(CASTING_SPELL_ITEM::getDefaultStack)
+                    .icon(WAND_ITEM::getDefaultStack)
                     .displayName(Text.translatable("itemgroup." + Starbound.MOD_ID))
                     .entries(((context, entries) -> {
                         for (Identifier i : Registries.ITEM.getIds().stream().sorted(Comparator.comparing(Identifier::toString)).toList()) {

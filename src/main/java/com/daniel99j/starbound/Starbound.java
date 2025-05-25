@@ -3,9 +3,14 @@ package com.daniel99j.starbound;
 import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.ModBlocks;
 import com.daniel99j.starbound.item.ModItems;
+import com.daniel99j.starbound.spell.Spells;
+import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
+import eu.pb4.polymer.resourcepack.impl.client.rendering.PolymerResourcePack;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +34,11 @@ public class Starbound implements ModInitializer {
 		ModBlocks.registerBlocks();
 		ModItems.registerModItems();
 		ModBlockEntities.registerBlockEntities();
+		Spells.init();
+
+		PolymerResourcePackUtils.addModAssets(MOD_ID);
+		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "block"), Identifier.of(MOD_ID, "gui"));
+		PolymerResourcePackUtils.markAsRequired();
 	}
 
 	public static void debug(String text) {

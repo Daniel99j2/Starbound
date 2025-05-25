@@ -12,6 +12,7 @@ import eu.pb4.factorytools.api.virtualentity.LodItemDisplayElement;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
 import eu.pb4.polymer.virtualentity.api.BlockWithElementHolder;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import eu.pb4.polymer.virtualentity.api.attachment.BlockAwareAttachment;
 import eu.pb4.polymer.virtualentity.api.elements.ItemDisplayElement;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -53,5 +54,10 @@ public class PulsarTransmitterBlock extends PulsarRedirectorBlock {
     @Override
     public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
         return Blocks.GLOWSTONE.getDefaultState();
+    }
+
+    @Override
+    public String getModel(World world, BlockAwareAttachment attachment) {
+        return "pulsar_transmitter";
     }
 }

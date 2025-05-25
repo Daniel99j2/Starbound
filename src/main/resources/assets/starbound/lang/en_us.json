@@ -1,0 +1,8 @@
+{
+  "block.starbound.pulsar_redirector": "Pulsar Redirector",
+  "block.starbound.pulsar_transmitter": "Pulsar Transmitter",
+  "item.starbound.wand": "Wand",
+  "spell.starbound.fire": "Fire",
+  "spell.starbound.fire.desc": "Unleashes a deadly vortex of flame and fire!",
+  "death.attack.pulsarBeam": "%s was fried by a high-powered pulsar beam"
+}

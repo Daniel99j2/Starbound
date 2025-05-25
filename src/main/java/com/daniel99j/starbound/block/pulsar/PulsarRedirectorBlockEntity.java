@@ -3,17 +3,23 @@ package com.daniel99j.starbound.block.pulsar;
 import com.daniel99j.lib99j.api.ParticleHelper;
 import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.ModBlocks;
+import com.daniel99j.starbound.misc.ModDamageTypes;
 import eu.pb4.polymer.core.api.utils.PolymerObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -25,6 +31,8 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
     private @Nullable BlockPos beaconPos;
     private float prevRenderingBeamWobble = 0.0F;
     private float currRenderingBeamWobble = 0.0F;
+
+    private int beamDistance;
 
     public PulsarRedirectorBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PULSAR_REDIRECTOR, pos, state);
@@ -45,34 +53,40 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
 
     public static void tick(World world, BlockPos pos, BlockState state, PulsarRedirectorBlockEntity be) {
         int power = state.get(ModBlocks.PULSAR_POWER);
-        if (be.getBeamSourcePos() != null) {
-            int actualPower = be.getBeamPower((ServerWorld) world);
+        be.updatePowerLevels(world, pos);
+        if (power > 0 && be.laserEnd != null) {
+            Box box = new Box(pos.toCenterPos().add(-0.2, -0.2, -0.2), be.laserEnd.toCenterPos().add(0.2, 0.2, 0.2));
+            world.getEntitiesByClass(Entity.class, box, e -> true).forEach(e -> {
+                e.damage((ServerWorld) e.getWorld(), new DamageSource(ModDamageTypes.of(e.getWorld(), ModDamageTypes.PULSAR_BEAM)), Math.max(2, (10f/((float) ModBlocks.MAX_PULSAR_POWER/power))));
+            });
+        }
+        be.customTick((ServerWorld) world, pos, state);
+    }
+
+    public void updatePowerLevels(World world, BlockPos pos) {
+        updatePowerLevels(world, pos, world.getBlockState(pos).get(ModBlocks.PULSAR_POWER));
+    }
+
+    public void updatePowerLevels(World world, BlockPos pos, int power) {
+        BlockState state = world.getBlockState(pos);
+        if (this.getBeamSourcePos() != null) {
+            int actualPower = this.getBeamPower((ServerWorld) world);
             if (actualPower == 0) {
-                be.setBeamSourcePos(null);
+                this.setBeamSourcePos(null);
             } else {
                 ParticleHelper.spawnParticlesAtPosition(world, pos.offset(Direction.UP, 1).toCenterPos(), ParticleTypes.NOTE, 2, 0.2, 0.2, 0.2, 0.2);
             }
 
             if (actualPower != power) {
-                ((ServerWorld) world).updateNeighbor(pos, state.getBlock(), null);
-//                world.updateNeighbor(pos, state.getBlock(), pos.offset(Direction.UP));
+                world.updateNeighbor(pos, state.getBlock(), null);
             }
         }
 
-//        if (power > 0 && be.laserEnd != null) {
-//            Box box = new Box(pos, be.laserEnd.add(1, 1, 1));
-//            world.getEntitiesByClass(Entity.class, box, e -> true).forEach(e -> {
-//                float damage = (float)((EntityInPrismBeamCallback)EntityInPrismBeamCallback.EVENT.invoker())
-//                        .entityInBeam(e, power).orElse((double) power);
-//                e.damage(PulsarDamageSources.create(world, PulsarDamageSources.PRISM_BEAM), damage);
-//            });
-//        }
-
         if ((pos.asLong() + world.getTime()) % 5L == 0L) {
             Direction dir = state.get(Properties.FACING);
-            BlockPos oldEndPos = be.laserEnd;
+            BlockPos oldEndPos = this.laserEnd;
             if (power < 1) {
-                be.laserEnd = null;
+                this.laserEnd = null;
                 modifyMachinePower(pos, world, 0, dir, oldEndPos, null);
             } else {
                 BlockPos.Mutable scanPos = pos.mutableCopy();
@@ -83,13 +97,20 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
                     if (checking.isSideSolidFullSquare(world, scanPos, dir.getOpposite())
                             || checking.isSideSolidFullSquare(world, scanPos, dir)) {
                         break;
+                    } else {
+                        ParticleHelper.spawnParticlesAtPosition(world, scanPos.toCenterPos(), ParticleTypes.END_ROD, 1, 0.2, 0.2, 0.2, 0);
+                        this.beamDistance = i+1;
                     }
                 }
 
-                be.laserEnd = scanPos.toImmutable();
-                modifyMachinePower(pos, world, power, dir, oldEndPos, be.laserEnd);
+                this.laserEnd = scanPos.toImmutable();
+                modifyMachinePower(pos, world, power, dir, oldEndPos, this.laserEnd);
             }
         }
+    }
+
+    protected void customTick(ServerWorld world, BlockPos pos, BlockState state) {
+
     }
 
     public float getRenderingBeamWobble(float partialTicks) {
@@ -103,6 +124,10 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
 
     public @Nullable BlockPos getLaserEnd() {
         return this.laserEnd;
+    }
+
+    public int getBeamDistance() {
+        return beamDistance;
     }
 
     public void resetPower() {
