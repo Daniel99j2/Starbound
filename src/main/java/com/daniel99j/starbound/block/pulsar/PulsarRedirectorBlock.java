@@ -6,15 +6,17 @@ import com.daniel99j.starbound.Starbound;
 import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.ModBlocks;
 import com.mojang.serialization.MapCodec;
+import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.virtualentity.BlockModel;
 import eu.pb4.factorytools.api.virtualentity.ItemDisplayElementUtil;
-import eu.pb4.factorytools.api.virtualentity.LodItemDisplayElement;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
 import eu.pb4.polymer.virtualentity.api.BlockWithElementHolder;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import eu.pb4.polymer.virtualentity.api.attachment.BlockAwareAttachment;
 import eu.pb4.polymer.virtualentity.api.elements.ItemDisplayElement;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -22,14 +24,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.Brightness;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -41,7 +41,7 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.Objects;
 
-public class PulsarRedirectorBlock extends PulsarMachineBlock implements PolymerBlock, BlockWithElementHolder {
+public class PulsarRedirectorBlock extends PulsarMachineBlock implements PolymerBlock, BlockWithElementHolder, FactoryBlock {
     public static final EnumProperty<Direction> FACING = Properties.FACING;
 
     public PulsarRedirectorBlock(Settings settings) {
@@ -95,7 +95,7 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
 
     @Override
     public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        return Blocks.BEACON.getDefaultState();
+        return Blocks.BARRIER.getDefaultState();
     }
 
     public static final class Model extends BlockModel {
@@ -103,14 +103,14 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
         private final ItemDisplayElement beamElement;
 
         private Model(ServerWorld world, BlockState state, BlockPos pos) {
-            this.mainElement = LodItemDisplayElement.createSimple(ItemUtils.getBasicModelItemStack(), this.getUpdateRate(), 0.3f, 0.6f);
+            this.mainElement = new ItemDisplayElement(ItemUtils.getBasicModelItemStack());
             this.mainElement.setTeleportDuration(0);
             this.mainElement.setInterpolationDuration(0);
-            this.beamElement = LodItemDisplayElement.createSimple(ItemUtils.getBasicModelItemStack(), this.getUpdateRate(), 0.3f, 0.6f);
+            this.beamElement = new ItemDisplayElement(ItemUtils.getBasicModelItemStack());
             this.beamElement.setTeleportDuration(0);
             this.beamElement.setInterpolationDuration(0);
             this.beamElement.setDisplaySize(10000000, 10000000);
-            this.updateAnimation(state.get(FACING).getOpposite(), world);
+            this.updateAnimation(state.get(FACING), world);
             this.addElement(this.mainElement);
             this.addElement(this.beamElement);
         }
@@ -127,6 +127,7 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
             }
 
             EntityUtils.setRotationFromDirection(facing, this.mainElement);
+            EntityUtils.setRotationFromDirection(facing, this.beamElement);
             this.mainElement.setInvisible(true);
             this.mainElement.startInterpolation();
 
@@ -138,29 +139,16 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
 
             if (this.blockAware() != null && Objects.requireNonNull(this.blockAware()).isPartOfTheWorld()) {
                 int power = this.blockState().get(ModBlocks.PULSAR_POWER);
-                int distance = ((PulsarRedirectorBlockEntity) world.getBlockEntity(this.blockAware().getBlockPos())).getBeamDistance();
+                int distance = ((PulsarRedirectorBlockEntity) Objects.requireNonNull(world.getBlockEntity(Objects.requireNonNull(this.blockAware()).getBlockPos()))).getBeamDistance();
 
                 if (power == 0 || distance == 0) {
                     this.beamElement.setScale(new Vector3f(0));
                 } else {
                     Matrix4x3f matrix = new Matrix4x3f();
 
-                    // Rotate to face direction
-                    float pitch = 0f;
-                    float yaw = 0f;
-                    switch (facing) {
-                        case DOWN -> pitch = (float) Math.toRadians(90);
-                        case UP -> pitch = (float) Math.toRadians(-90);
-                        case NORTH -> yaw = (float) Math.toRadians(180);
-                        case SOUTH -> yaw = (float) Math.toRadians(0);
-                        case WEST -> yaw = (float) Math.toRadians(90);
-                        case EAST -> yaw = (float) Math.toRadians(-90);
-                    }
-                    matrix.rotateXYZ(pitch, yaw, 0f);
+                    matrix.translate(new Vector3f(0, 0, distance/2f+0.5f));
 
-                    matrix.translate(new Vector3f((distance / 2f) + 0.5f, 0, 0));
-
-                    matrix.scale(new Vector3f(distance, 1, 1));
+                    matrix.scale(new Vector3f(1, 1, (float) distance));
 
                     this.beamElement.setTransformation(matrix);
                 }

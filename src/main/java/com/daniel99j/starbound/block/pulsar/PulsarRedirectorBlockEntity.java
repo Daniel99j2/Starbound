@@ -1,5 +1,6 @@
 package com.daniel99j.starbound.block.pulsar;
 
+import com.daniel99j.lib99j.api.NumberUtils;
 import com.daniel99j.lib99j.api.ParticleHelper;
 import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.ModBlocks;
@@ -11,11 +12,9 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -73,8 +72,6 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
             int actualPower = this.getBeamPower((ServerWorld) world);
             if (actualPower == 0) {
                 this.setBeamSourcePos(null);
-            } else {
-                ParticleHelper.spawnParticlesAtPosition(world, pos.offset(Direction.UP, 1).toCenterPos(), ParticleTypes.NOTE, 2, 0.2, 0.2, 0.2, 0.2);
             }
 
             if (actualPower != power) {
@@ -98,7 +95,7 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
                             || checking.isSideSolidFullSquare(world, scanPos, dir)) {
                         break;
                     } else {
-                        ParticleHelper.spawnParticlesAtPosition(world, scanPos.toCenterPos(), ParticleTypes.END_ROD, 1, 0.2, 0.2, 0.2, 0);
+                        if(NumberUtils.getRandomInt(0, 4) == 0) ParticleHelper.spawnParticlesAtPosition(world, scanPos.toCenterPos(), ParticleTypes.END_ROD, 1, 0.2, 0.2, 0.2, 0);
                         this.beamDistance = i+1;
                     }
                 }

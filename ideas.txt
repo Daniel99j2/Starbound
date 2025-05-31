@@ -25,3 +25,16 @@ fake player spawn
 walk in the air?
 solar flare?
 gravity?
+
+
+== SPELLS ==
+DEFENSE
+- Fire
+- Lightning
+
+OFFENSE
+- Potion?
+- Gravity well
+
+PERSONAL
+- Teleport

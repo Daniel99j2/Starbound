@@ -1,7 +1,7 @@
 package com.daniel99j.starbound.misc;
 
-import com.daniel99j.starbound.spell.Spell;
-import com.daniel99j.starbound.spell.Spells;
+import com.daniel99j.starbound.magic.spell.Spell;
+import com.daniel99j.starbound.magic.spell.Spells;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;

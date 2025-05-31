@@ -1,7 +1,6 @@
 package com.daniel99j.starbound.block.pulsar;
 
 import com.daniel99j.starbound.block.ModBlocks;
-
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;

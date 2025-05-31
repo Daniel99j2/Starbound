@@ -1,16 +1,18 @@
 package com.daniel99j.starbound.block.pulsar;
 
 import com.daniel99j.starbound.block.ModBlocks;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.item.ItemPlacementContext;
-
 import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.ScheduledTickView;
 

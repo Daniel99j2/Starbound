@@ -4,5 +4,12 @@
   "item.starbound.wand": "Wand",
   "spell.starbound.fire": "Fire",
   "spell.starbound.fire.desc": "Unleashes a deadly vortex of flame and fire!",
-  "death.attack.pulsarBeam": "%s was fried by a high-powered pulsar beam"
+  "death.attack.pulsarBeam": "%s was fried by a high-powered pulsar beam",
+  "death.attack.pulsarBeam.player": "%s was hit into a high-powered pulsar beam by %s",
+  "item.starbound.gravity_anchor": "Gravity Anchor",
+  "item.starbound.prism_lens_goggles": "Prism-lens goggles",
+  "item.starbound.astral_fabricator": "Astral Fabricator",
+  "item.starbound.invisibility_cloak": "Cloak of Invisibility",
+  "item.starbound.spellbook": "Spellbook",
+  "block.starbound.mysterious_core": "???"
 }

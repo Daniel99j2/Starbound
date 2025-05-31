@@ -1,28 +1,15 @@
 package com.daniel99j.starbound.item;
 
 import com.daniel99j.lib99j.api.ItemUtils;
-import com.daniel99j.starbound.gui.SpellSelectorGui;
-import com.daniel99j.starbound.util.PlayerSkinUtils;
-import com.mojang.datafixers.util.Pair;
-import de.tomalbrc.danse.util.MinecraftSkinParser;
+import com.daniel99j.starbound.magic.spell.Spell;
+import com.daniel99j.starbound.misc.ModEntityComponents;
 import eu.pb4.polymer.core.api.item.PolymerItem;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.network.packet.s2c.play.EntityEquipmentUpdateS2CPacket;
-import net.minecraft.network.packet.s2c.play.SetPlayerInventoryS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
-
-import java.util.List;
 
 public class WandItem extends Item implements PolymerItem {
     public WandItem(Settings settings) {
@@ -32,5 +19,15 @@ public class WandItem extends Item implements PolymerItem {
     @Override
     public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
         return ItemUtils.getBasicModelItem();
+    }
+
+    @Override
+    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipType tooltipType, PacketContext context) {
+        ItemStack out = PolymerItem.super.getPolymerItemStack(itemStack, tooltipType, context);
+        if(context.getPlayer() instanceof ServerPlayerEntity player) {
+            Spell spell = ModEntityComponents.PLAYER_DATA.get(player).getLastCastSpell();
+            if(spell != null) out.set(DataComponentTypes.USE_COOLDOWN, spell.getIcon().get(DataComponentTypes.USE_COOLDOWN));
+        }
+        return out;
     }
 }

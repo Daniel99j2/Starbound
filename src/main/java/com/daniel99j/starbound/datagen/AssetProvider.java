@@ -1,6 +1,8 @@
 package com.daniel99j.starbound.datagen;
 
 import com.daniel99j.starbound.Starbound;
+import com.daniel99j.starbound.magic.spell.Spell;
+import com.daniel99j.starbound.magic.spell.Spells;
 import com.google.common.hash.HashCode;
 import eu.pb4.polymer.resourcepack.api.AssetPaths;
 import eu.pb4.polymer.resourcepack.extras.api.format.item.ItemAsset;
@@ -23,13 +25,65 @@ import java.util.function.BiConsumer;
 
 public class AssetProvider implements DataProvider {
     private final DataOutput output;
-    private static final List<String> disabledAutoModel = List.of("crab_claw", "invalid_item", "tarsis_rock", "tarsis_deep_rock", "copper_horn", "north_compass", "blackstone_piston", "blackstone_sticky_piston", "sleeping_bag", "trip_wire");
+    private static final List<String> disabledAutoModel = List.of();
 
     private static final String BASIC_ITEM_TEMPLATE = """
             {
               "parent": "%BASE%",
               "textures": {
                 "layer0": "%ID%"
+              }
+            }
+            """.replace(" ", "").replace("\n", "");
+
+    private static final String SPELL_ITEM_FILE = """
+            {
+              "model": {
+                "type": "minecraft:select",
+                "cases": [
+                  {
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "%gui%"
+                    },
+                    "when": [
+                      "gui"
+                    ]
+                  },
+                  {
+                    "when": "firstperson_righthand",
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "%hand%"
+                    }
+                  },
+                  {
+                    "when": "firstperson_lefthand",
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "%hand%"
+                    }
+                  },
+                  {
+                    "when": "thirdperson_righthand",
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "%hand%"
+                    }
+                  },
+                  {
+                    "when": "thirdperson_lefthand",
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "%hand%"
+                    }
+                  }
+                ],
+                "property": "minecraft:display_context",
+                "fallback": {
+                  "type": "minecraft:model",
+                  "model": "%other%"
+                }
               }
             }
             """.replace(" ", "").replace("\n", "");
@@ -52,10 +106,20 @@ public class AssetProvider implements DataProvider {
             }
             consumer.accept(id, new ItemAsset(new BasicItemModel(id.withPrefixedPath(item instanceof BlockItem ? "block/" : "item/")), ItemAsset.Properties.DEFAULT));
 
-            if(!(item instanceof BlockItem)) {
+            if (!(item instanceof BlockItem)) {
                 assetWriter.accept("assets/" + Starbound.MOD_ID + "/models/item/" + id.getPath() + ".json",
-                        BASIC_ITEM_TEMPLATE.replace("%ID%", Identifier.of(Starbound.MOD_ID, "item/"+id.getPath()).toString()).replace("%BASE%", "minecraft:item/generated").getBytes(StandardCharsets.UTF_8));
+                        BASIC_ITEM_TEMPLATE.replace("%ID%", Identifier.of(Starbound.MOD_ID, "item/" + id.getPath()).toString()).replace("%BASE%", "minecraft:item/generated").getBytes(StandardCharsets.UTF_8));
             }
+        }
+
+        assetWriter.accept("assets/" + Starbound.MOD_ID + "/items/wand.json",
+                SPELL_ITEM_FILE.replace("%gui%", "starbound:item/wand_gui").replace("%hand%", "starbound:item/wand_hand").replace("%other%", "starbound:item/wand_other").getBytes(StandardCharsets.UTF_8));
+
+        for(Spell spell : Spells.getSpells()) {
+            assetWriter.accept("assets/" + spell.id.getNamespace() + "/models/gui/spell/" + spell.id.getPath() + ".json",
+                    BASIC_ITEM_TEMPLATE.replace("%ID%", spell.id.getNamespace() + ":spell/" + spell.id.getPath()).replace("%BASE%", "minecraft:item/generated").getBytes(StandardCharsets.UTF_8));
+            assetWriter.accept("assets/" + spell.id.getNamespace() + "/items/spell/" + spell.id.getPath() + ".json",
+                    SPELL_ITEM_FILE.replace("%gui%", spell.id.getNamespace() + ":gui/spell/" + spell.id.getPath()).replace("%hand%", "starbound:item/wand_hand").replace("%other%", "starbound:item/wand_other").getBytes(StandardCharsets.UTF_8));
         }
     }
 

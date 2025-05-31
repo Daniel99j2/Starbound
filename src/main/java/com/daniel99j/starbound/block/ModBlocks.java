@@ -4,12 +4,16 @@ import com.daniel99j.starbound.Starbound;
 import com.daniel99j.starbound.block.pulsar.PulsarRedirectorBlock;
 import com.daniel99j.starbound.block.pulsar.PulsarTransmitterBlock;
 import com.daniel99j.starbound.block.pulsar.machines.TestPulsarMachine;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.Identifier;
 
@@ -35,6 +39,12 @@ public class ModBlocks {
             "test_machine",
             TestPulsarMachine::new,
             AbstractBlock.Settings.copy(Blocks.BEACON).pistonBehavior(PistonBehavior.NORMAL)
+    );
+
+    public static final Block MYSTERIOUS_CORE = registerBlock(
+            "mysterious_core",
+            MysteriousCoreBlock::new,
+            AbstractBlock.Settings.copy(Blocks.CONDUIT).pistonBehavior(PistonBehavior.NORMAL).sounds(BlockSoundGroup.SCULK).mapColor(MapColor.CLEAR).solid().nonOpaque()
     );
 
     public static void registerBlocks() {

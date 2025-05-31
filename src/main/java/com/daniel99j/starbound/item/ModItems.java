@@ -9,26 +9,40 @@ import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.TooltipDisplayComponent;
+import net.minecraft.component.type.EquippableComponent;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.equipment.EquipmentAsset;
+import net.minecraft.item.equipment.EquipmentAssetKeys;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class ModItems {
-    public static final Item WAND_ITEM = register("wand", WandItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.TOOLTIP_DISPLAY, new TooltipDisplayComponent(true, new LinkedHashSet<>())));
+    public static final Item WAND_ITEM = register("wand", WandItem::new, new Item.Settings().maxCount(1));
+    public static final Item GRAVITY_ANCHOR_ITEM = register("gravity_anchor", GravityAnchorItem::new, new Item.Settings().maxCount(1));
     public static final Item PULSAR_REDIRECTOR_BLOCK = register(ModBlocks.PULSAR_REDIRECTOR);
     public static final Item PULSAR_TRANSMITTER_BLOCK = register(ModBlocks.PULSAR_TRANSMITTER);
+    public static final RegistryKey<EquipmentAsset> LENS_ASSET = RegistryKey.of(EquipmentAssetKeys.REGISTRY_KEY, Identifier.of(Starbound.MOD_ID, "lens_goggles"));
+    public static final Item PRISM_LENS_GOGGLES = register("prism_lens_goggles", PrismLensGoggles::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, new EquippableComponent(EquipmentSlot.HEAD, SoundEvents.ITEM_ARMOR_EQUIP_IRON, Optional.ofNullable(LENS_ASSET), Optional.of(Identifier.of(Starbound.MOD_ID, "misc/lens_goggles")), Optional.empty(), true, true, false, true)));
+    public static final RegistryKey<EquipmentAsset> INVIS_CLOAK_ASSET = RegistryKey.of(EquipmentAssetKeys.REGISTRY_KEY, Identifier.of(Starbound.MOD_ID, "invisibility_cloak"));
+    public static final Item INVIS_CLOAK_ITEM = register("invisibility_cloak", InvisCloakItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, new EquippableComponent(EquipmentSlot.CHEST, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, Optional.ofNullable(INVIS_CLOAK_ASSET), Optional.empty(), Optional.empty(), true, true, false, true)));
+    public static final Item ASTRAL_FABRICATOR_ITEM = register("astral_fabricator", AstralFabricatorItem::new, new Item.Settings().maxCount(1));
+    public static final Item MYSTERIOUS_CORE_ITEM = register(ModBlocks.MYSTERIOUS_CORE);
 
     public static Item registerSpawnEgg(EntityType<? extends MobEntity> entityType) {
         return register(keyOf(entityType.getRegistryEntry().registryKey().getValue().getPath()+"_spawn_egg"), settings -> new PolymerSpawnEgg(entityType, settings), new Item.Settings());

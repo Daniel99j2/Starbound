@@ -2,7 +2,6 @@ package com.daniel99j.starbound.block.pulsar.machines;
 
 import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.pulsar.PulsarRedirectorBlock;
-import com.daniel99j.starbound.block.pulsar.PulsarTransmitterBlockEntity;
 import com.daniel99j.starbound.gui.TestMachineGui;
 import eu.pb4.polymer.virtualentity.api.attachment.BlockAwareAttachment;
 import net.minecraft.block.BlockState;
@@ -11,7 +10,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.SidedInventory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
