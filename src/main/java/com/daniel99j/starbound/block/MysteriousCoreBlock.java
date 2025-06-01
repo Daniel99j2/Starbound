@@ -70,7 +70,7 @@ public class MysteriousCoreBlock extends Block implements PolymerBlock, BlockWit
                 this.mainElement.setItem(ItemDisplayElementUtil.getModel(Identifier.of(Starbound.MOD_ID, "block/mysterious_core")));
                 this.mainElement.setInvisible(true);
                 Matrix4x3f matrix = new Matrix4x3f();
-                matrix.rotateXYZ((float) Math.toRadians((world.getTime()+this.blockAware().getBlockPos().asLong()) % 360), (float) Math.toRadians((world.getTime()+this.blockAware().getBlockPos().asLong()) % 360), 0f);
+                matrix.rotateXYZ((float) Math.toRadians((world.getTime()+this.blockAware().getBlockPos().asLong()+this.blockAware().getBlockPos().getY()*56.2f) % 360), (float) Math.toRadians((world.getTime()+this.blockAware().getBlockPos().asLong()+this.blockAware().getBlockPos().getY()) % 360), 0f);
                 this.mainElement.setTransformation(matrix);
                 this.mainElement.setTeleportDuration(5);
                 this.mainElement.setInterpolationDuration(5);

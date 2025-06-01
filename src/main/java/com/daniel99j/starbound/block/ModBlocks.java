@@ -4,6 +4,7 @@ import com.daniel99j.starbound.Starbound;
 import com.daniel99j.starbound.block.pulsar.PulsarRedirectorBlock;
 import com.daniel99j.starbound.block.pulsar.PulsarTransmitterBlock;
 import com.daniel99j.starbound.block.pulsar.machines.TestPulsarMachine;
+import com.daniel99j.starbound.block.pulsar.machines.TurretMachine;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -39,6 +40,12 @@ public class ModBlocks {
             "test_machine",
             TestPulsarMachine::new,
             AbstractBlock.Settings.copy(Blocks.BEACON).pistonBehavior(PistonBehavior.NORMAL)
+    );
+
+    public static final Block TURRET = registerBlock(
+            "turret",
+            TurretMachine::new,
+            AbstractBlock.Settings.copy(Blocks.OBSIDIAN).pistonBehavior(PistonBehavior.NORMAL)
     );
 
     public static final Block MYSTERIOUS_CORE = registerBlock(

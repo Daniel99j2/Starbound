@@ -41,9 +41,6 @@ public class PhaseSpell extends Spell {
 
             Vec3d newPos = currentPos.add(accelerationVector.x, accelerationVector.y, accelerationVector.z);
 
-            if (FabricLoader.getInstance().isDevelopmentEnvironment())
-                ParticleHelper.spawnParticlesAtPosition(player.getWorld(), currentPos, hasBeenSolid ? ParticleTypes.GUST : ParticleTypes.HEART, 1, 0, 0, 0, 0);
-
             float f = player.getDimensions(player.getPose()).width() * 0.8F;
             Box box = Box.of(currentPos, f, 1.0E-6, f);
             boolean collidesAtPos = BlockPos.stream(box)

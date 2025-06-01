@@ -25,13 +25,13 @@ public class TestPulsarMachineBlockEntity extends PulsarRedirectorBlockEntity im
     }
 
     @Override
-    public float getPowerMultiplier() {
-        return 0.8f;
+    public int getPowerUsage() {
+        return 10;
     }
 
     @Override
-    protected void customTick(ServerWorld world, BlockPos pos, BlockState state) {
-        if(!inventory.getFirst().isEmpty() && state.get(ModBlocks.PULSAR_POWER) > 0) {
+    protected void customTick(ServerWorld world, BlockPos pos, BlockState state, int power, boolean shouldRun) {
+        if(!inventory.getFirst().isEmpty() && power > 0) {
             if(this.cookTime > 20 && (inventory.get(2).isEmpty() || (inventory.get(2).getCount()+1 < inventory.get(2).getMaxCount()))) {
                 cookTime = 0;
                 if (inventory.get(2).isEmpty()) inventory.set(1, Items.END_CRYSTAL.getDefaultStack());

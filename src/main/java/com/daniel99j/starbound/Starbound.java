@@ -7,6 +7,7 @@ import com.daniel99j.starbound.item.ModItems;
 import com.daniel99j.starbound.magic.PrismLensTrailManager;
 import com.daniel99j.starbound.magic.spell.Spells;
 import com.daniel99j.starbound.misc.GuiTextures;
+import eu.pb4.polymer.core.api.utils.PolymerUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import net.fabricmc.api.ModInitializer;
@@ -20,8 +21,6 @@ import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-
 public class Starbound implements ModInitializer {
 	public static final String MOD_ID = "starbound";
 
@@ -29,7 +28,7 @@ public class Starbound implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger("Starbound");
-	private static final org.apache.logging.log4j.Logger DEV_LOGGER = LogManager.getLogger("Starbound Debug");
+	private static final Logger DEV_LOGGER = LoggerFactory.getLogger("Starbound Debug");
 
 	@Override
 	public void onInitialize() {
@@ -55,7 +54,7 @@ public class Starbound implements ModInitializer {
 
 		CommandRegistrationCallback.EVENT.register(((commandDispatcher, commandRegistryAccess, registrationEnvironment) -> {
 			commandDispatcher.getRoot().addChild(CommandManager.literal("test-starbound").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes((commandContext -> {
-				Objects.requireNonNull(commandContext.getSource().getPlayer()).getWorld().spawnEntity(EntityUtils.cloneEntity(EntityArgumentType.getEntity(commandContext, "entity")));
+				PolymerUtils.getFakeWorld().spawnEntity(EntityUtils.cloneEntity(EntityArgumentType.getEntity(commandContext, "entity")));
 				return 1;
 			}))).build());
 		}));

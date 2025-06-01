@@ -4,6 +4,7 @@ import com.daniel99j.starbound.Starbound;
 import com.daniel99j.starbound.block.pulsar.PulsarRedirectorBlockEntity;
 import com.daniel99j.starbound.block.pulsar.PulsarTransmitterBlockEntity;
 import com.daniel99j.starbound.block.pulsar.machines.TestPulsarMachineBlockEntity;
+import com.daniel99j.starbound.block.pulsar.machines.TurretBlockEntity;
 import eu.pb4.polymer.core.api.block.PolymerBlockUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntity;
@@ -23,6 +24,10 @@ public final class ModBlockEntities {
 
     public static final BlockEntityType<TestPulsarMachineBlockEntity> TEST_MACHINE = register("test_machine", FabricBlockEntityTypeBuilder.create(TestPulsarMachineBlockEntity::new,
             ModBlocks.TEST_MACHINE
+    ).build(null));
+
+    public static final BlockEntityType<TurretBlockEntity> TURRET = register("turret", FabricBlockEntityTypeBuilder.create(TurretBlockEntity::new,
+            ModBlocks.TURRET
     ).build(null));
 
 

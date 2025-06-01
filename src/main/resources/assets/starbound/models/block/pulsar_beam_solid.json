@@ -1,0 +1,45 @@
+{
+	"credit": "Made by Daniel99j, with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "starbound:block/pulsar_beam",
+		"particle": "starbound:block/pulsar_beam"
+	},
+	"elements": [
+		{
+			"from": [11, 5, -0.25],
+			"to": [5, 11, 16.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [11, 5, 16]},
+			"faces": {
+				"north": {"uv": [9.01, 6, 6, 9.01], "texture": "#0"},
+				"east": {"uv": [8, 0, 0, 3], "texture": "#0"},
+				"south": {"uv": [9.01, 6, 6, 9.01], "texture": "#0"},
+				"west": {"uv": [0, 0, 8, 3], "texture": "#0"},
+				"up": {"uv": [0, 0, 8.01, 3.01], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [8.01, 3.01, 0, 0], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 5, -0.25],
+			"to": [11, 11, 16.25],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 5, 16]},
+			"faces": {
+				"north": {"uv": [9.01, 6, 6, 9.01], "texture": "#0"},
+				"east": {"uv": [8, 0, 0, 3], "texture": "#0"},
+				"south": {"uv": [9.01, 6, 6, 9.01], "texture": "#0"},
+				"west": {"uv": [0, 0, 8, 3], "texture": "#0"},
+				"up": {"uv": [0, 0, 8.01, 3.01], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [8.01, 3.01, 0, 0], "rotation": 90, "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "group",
+			"origin": [5, 5, 16],
+			"color": 0,
+			"nbt": "{}",
+			"children": [0, 1]
+		}
+	]
+}

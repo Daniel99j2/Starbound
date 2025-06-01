@@ -71,8 +71,6 @@ public abstract class Spell {
 
             Vec3d newPos = currentPos.add(accelerationVector.x, accelerationVector.y, accelerationVector.z);
 
-            if(FabricLoader.getInstance().isDevelopmentEnvironment()) ParticleHelper.spawnParticlesAtPosition(player.getWorld(), currentPos, ParticleTypes.HEART, 1, 0, 0, 0, 0);
-
             if(!player.getWorld().getBlockState(BlockPos.ofFloored(newPos)).getCollisionShape(player.getWorld(), BlockPos.ofFloored(newPos)).isEmpty()) {
                 raycast(player, (remaining-1)/2, steps, distance, currentPos, pitch, yaw);
             } else {

@@ -85,7 +85,7 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
 
     @Override
     public ElementHolder createElementHolder(ServerWorld world, BlockPos pos, BlockState initialBlockState) {
-        return new Model(world, initialBlockState, pos);
+        return new PulsarPoweredModel(world, initialBlockState, pos);
     }
 
     @Override
@@ -98,11 +98,11 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
         return Blocks.BARRIER.getDefaultState();
     }
 
-    public static final class Model extends BlockModel {
-        private final ItemDisplayElement mainElement;
-        private final ItemDisplayElement beamElement;
+    public static class PulsarPoweredModel extends BlockModel {
+        protected ItemDisplayElement mainElement;
+        protected ItemDisplayElement beamElement;
 
-        private Model(ServerWorld world, BlockState state, BlockPos pos) {
+        public PulsarPoweredModel(ServerWorld world, BlockState state, BlockPos pos) {
             this.mainElement = new ItemDisplayElement(ItemUtils.getBasicModelItemStack());
             this.mainElement.setTeleportDuration(0);
             this.mainElement.setInterpolationDuration(0);
@@ -115,11 +115,11 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
             this.addElement(this.beamElement);
         }
 
-        private int getUpdateRate() {
+        protected int getUpdateRate() {
             return 1;
         }
 
-        private void updateAnimation(Direction facing, World world) {
+        protected void updateAnimation(Direction facing, World world) {
             if (this.blockAware() != null) {
                 this.mainElement.setItem(ItemDisplayElementUtil.getModel(
                         Identifier.of(Starbound.MOD_ID, "block/" + ((PulsarRedirectorBlock) this.blockState().getBlock()).getModel(world, this.blockAware()))
@@ -130,10 +130,6 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
             EntityUtils.setRotationFromDirection(facing, this.beamElement);
             this.mainElement.setInvisible(true);
             this.mainElement.startInterpolation();
-
-            this.beamElement.setItem(ItemDisplayElementUtil.getModel(
-                    Identifier.of(Starbound.MOD_ID, "block/pulsar_beam")
-            ));
             this.beamElement.setInvisible(true);
             this.beamElement.setBrightness(Brightness.FULL);
 
@@ -141,8 +137,12 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
                 int power = this.blockState().get(ModBlocks.PULSAR_POWER);
                 int distance = ((PulsarRedirectorBlockEntity) Objects.requireNonNull(world.getBlockEntity(Objects.requireNonNull(this.blockAware()).getBlockPos()))).getBeamDistance();
 
-                if (power == 0 || distance == 0) {
-                    this.beamElement.setScale(new Vector3f(0));
+                this.beamElement.setItem(ItemDisplayElementUtil.getModel(
+                        Identifier.of(Starbound.MOD_ID,  distance == 32 ? "block/pulsar_beam" : "block/pulsar_beam_solid")
+                ));
+
+                if (power == 0 || distance <= 0) {
+                    this.beamElement.setTransformation(new Matrix4x3f().scale(0));
                 } else {
                     Matrix4x3f matrix = new Matrix4x3f();
 
@@ -153,8 +153,6 @@ public class PulsarRedirectorBlock extends PulsarMachineBlock implements Polymer
                     this.beamElement.setTransformation(matrix);
                 }
             }
-
-            this.beamElement.startInterpolation();
         }
 
         @Override

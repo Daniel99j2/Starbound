@@ -56,10 +56,10 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
         if (power > 0 && be.laserEnd != null) {
             Box box = new Box(pos.toCenterPos().add(-0.2, -0.2, -0.2), be.laserEnd.toCenterPos().add(0.2, 0.2, 0.2));
             world.getEntitiesByClass(Entity.class, box, e -> true).forEach(e -> {
-                e.damage((ServerWorld) e.getWorld(), new DamageSource(ModDamageTypes.of(e.getWorld(), ModDamageTypes.PULSAR_BEAM)), Math.max(2, (10f/((float) ModBlocks.MAX_PULSAR_POWER/power))));
+                e.damage((ServerWorld) e.getWorld(), new DamageSource(ModDamageTypes.of(e.getWorld(), ModDamageTypes.PULSAR_BEAM)), Math.max(0, (10f/((float) ModBlocks.MAX_PULSAR_POWER/power))));
             });
         }
-        be.customTick((ServerWorld) world, pos, state);
+        be.customTick((ServerWorld) world, pos, state, power, power >= be.getPowerUsage());
     }
 
     public void updatePowerLevels(World world, BlockPos pos) {
@@ -106,7 +106,7 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
         }
     }
 
-    protected void customTick(ServerWorld world, BlockPos pos, BlockState state) {
+    protected void customTick(ServerWorld world, BlockPos pos, BlockState state, int power, boolean shouldRun) {
 
     }
 
@@ -180,10 +180,5 @@ public class PulsarRedirectorBlockEntity extends BlockEntity implements PolymerO
 
     public boolean canAcceptBeam(Direction beamDir) {
         return ((PulsarMachineBlock) ModBlocks.PULSAR_REDIRECTOR).isReceivingSide(this.getCachedState(), beamDir.getOpposite());
-    }
-
-    @Override
-    public float getPowerMultiplier() {
-        return 1;
     }
 }

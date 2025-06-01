@@ -15,9 +15,4 @@ public class PulsarTransmitterBlockEntity extends PulsarRedirectorBlockEntity {
     public int getBeamPower(ServerWorld world) {
         return ModBlocks.MAX_PULSAR_POWER;
     }
-
-    @Override
-    public float getPowerMultiplier() {
-        return 1;
-    }
 }
