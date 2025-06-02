@@ -27,25 +27,25 @@ public class ModBlocks {
     public static final Block PULSAR_REDIRECTOR = registerBlock(
             "pulsar_redirector",
             PulsarRedirectorBlock::new,
-            AbstractBlock.Settings.copy(Blocks.BEACON).pistonBehavior(PistonBehavior.NORMAL)
+            AbstractBlock.Settings.copy(Blocks.DISPENSER).nonOpaque().pistonBehavior(PistonBehavior.NORMAL)
     );
 
     public static final Block PULSAR_TRANSMITTER = registerBlock(
             "pulsar_transmitter",
             PulsarTransmitterBlock::new,
-            AbstractBlock.Settings.copy(Blocks.BEACON).pistonBehavior(PistonBehavior.NORMAL)
+            AbstractBlock.Settings.copy(Blocks.BEACON).nonOpaque().pistonBehavior(PistonBehavior.NORMAL)
     );
 
     public static final Block TEST_MACHINE = registerBlock(
             "test_machine",
             TestPulsarMachine::new,
-            AbstractBlock.Settings.copy(Blocks.BEACON).pistonBehavior(PistonBehavior.NORMAL)
+            AbstractBlock.Settings.copy(Blocks.DISPENSER).nonOpaque().pistonBehavior(PistonBehavior.NORMAL)
     );
 
     public static final Block TURRET = registerBlock(
             "turret",
             TurretMachine::new,
-            AbstractBlock.Settings.copy(Blocks.OBSIDIAN).pistonBehavior(PistonBehavior.NORMAL)
+            AbstractBlock.Settings.copy(Blocks.OBSIDIAN).nonOpaque().pistonBehavior(PistonBehavior.NORMAL)
     );
 
     public static final Block MYSTERIOUS_CORE = registerBlock(

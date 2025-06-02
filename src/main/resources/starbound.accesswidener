@@ -1,4 +1,3 @@
 accessWidener	v2	named
-accessible field de/tomalbrc/danse/poly/PlayerPartHolder locatorPartMap Ljava/util/Map;
 accessible field net/minecraft/block/AbstractBlock$Settings registryKey Lnet/minecraft/registry/RegistryKey;
 accessible field net/minecraft/server/network/ServerPlayNetworkHandler floatingTicks I

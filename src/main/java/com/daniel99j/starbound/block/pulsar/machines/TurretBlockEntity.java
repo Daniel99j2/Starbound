@@ -83,10 +83,10 @@ public class TurretBlockEntity extends PulsarRedirectorBlockEntity {
             if(targetMode == TargetMode.LIGHT) b2 = e.isGlowing();
             else if(targetMode == TargetMode.HOSTILE) b2 = e instanceof HostileEntity;
             else if(targetMode == TargetMode.LIGHT_HOSTILE) b2 = e.isGlowing() || e instanceof HostileEntity;
-            testEntity.setPos(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());
+            testEntity.setPos(this.getPos().getX(), this.getPos().getY()+1, this.getPos().getZ());
             testEntity.setVelocity(Vec3d.ZERO);
             EntityUtils.accelerateTowards(testEntity, e.getX(), e.getY(), e.getZ(), 1);
-            testEntity.setPos(this.getPos().getX()+testEntity.getVelocity().getX(), this.getPos().getY()+testEntity.getVelocity().getY(), this.getPos().getZ()+testEntity.getVelocity().getZ());
+            testEntity.setPos(this.getPos().getX()+testEntity.getVelocity().getX(), this.getPos().getY()+1+testEntity.getVelocity().getY(), this.getPos().getZ()+testEntity.getVelocity().getZ());
             return !(b1 && b2 && e.canSee(testEntity, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, ((e.getEyeY()+e.getY())/2f)));
         });
         entities.sort(Comparator.comparingDouble((e) -> Math.sqrt(e.squaredDistanceTo(Vec3d.of(this.getPos())))*((targetMode == TargetMode.LIGHT) || (targetMode == TargetMode.LIGHT_HOSTILE) && e.isGlowing() ? 1 : 50)));

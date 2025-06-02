@@ -26,6 +26,8 @@ walk in the air?
 solar flare?
 gravity?
 
+lift water out of ground
+
 
 == SPELLS ==
 DEFENSE
@@ -38,3 +40,15 @@ OFFENSE
 
 PERSONAL
 - Teleport
+
+
+temp effects:
+wind barrier
+water bubble
+dummy - basic and symmetrical
+fake walls????
+possess
+
+
+turn into a fake block (stone person?)
+slow down time

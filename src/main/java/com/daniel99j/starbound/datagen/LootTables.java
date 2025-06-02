@@ -18,5 +18,7 @@ class LootTables extends FabricBlockLootTableProvider {
         this.addDrop(ModBlocks.PULSAR_REDIRECTOR);
         this.addDrop(ModBlocks.PULSAR_TRANSMITTER);
         this.addDrop(ModBlocks.MYSTERIOUS_CORE);
+        this.addDrop(ModBlocks.TURRET);
+        this.addDrop(ModBlocks.TEST_MACHINE);
     }
 }

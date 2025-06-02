@@ -7,8 +7,12 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.component.type.UseCooldownComponent;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -34,16 +38,25 @@ public abstract class Spell {
 
     public final boolean baseCast(ServerPlayerEntity player) {
         if(canCast(player)) {
-            cast(player);
-            player.getItemCooldownManager().set(this.getIcon(), this.cooldown);
-            return true;
+            boolean b = cast(player);
+            if(b) {
+                castEffects(player);
+            } else {
+                player.networkHandler.sendPacket(new PlaySoundS2CPacket(RegistryEntry.of(SoundEvents.BLOCK_FIRE_EXTINGUISH), SoundCategory.PLAYERS, player.getX(), player.getY(), player.getZ(), 1, 1, 0L));
+            };
+            return b;
         }
         return false;
     }
 
-    protected void cast(ServerPlayerEntity player) {
-        player.swingHand(Hand.MAIN_HAND);
+    protected boolean cast(ServerPlayerEntity player) {
         player.sendMessage(Text.of("Basic spell triggered!"));
+        return true;
+    }
+
+    protected void castEffects(ServerPlayerEntity player) {
+        player.getItemCooldownManager().set(this.getIcon(), this.cooldown);
+        player.swingHand(Hand.MAIN_HAND);
     }
 
     public ItemStack getIcon() {

@@ -2,7 +2,11 @@ package com.daniel99j.starbound.magic.spell;
 
 import com.daniel99j.lib99j.api.ParticleHelper;
 import com.daniel99j.lib99j.api.SoundUtils;
+import com.daniel99j.starbound.block.ModBlocks;
+import com.daniel99j.starbound.misc.ModDamageTypes;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -10,10 +14,11 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
-public class WaterSpell extends Spell {
-    public WaterSpell(Identifier id, int energyUsed, int cooldown) {
+public class LightBeamSpell extends Spell {
+    public LightBeamSpell(Identifier id, int energyUsed, int cooldown) {
         super(id, energyUsed, cooldown);
     }
 
@@ -26,14 +31,15 @@ public class WaterSpell extends Spell {
     @Override
     protected void castEffects(ServerPlayerEntity player) {
         super.castEffects(player);
-        SoundUtils.playSoundAtPosition((ServerWorld) player.getWorld(), player.getEyePos(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.PLAYERS, 1, 1);
+        SoundUtils.playSoundAtPosition((ServerWorld) player.getWorld(), player.getEyePos(), SoundEvents.ITEM_AXE_SCRAPE, SoundCategory.PLAYERS, 1, 1.2f);
     }
 
     @Override
     protected void raycast(ServerPlayerEntity player, int remaining, int steps, float distance, Vec3d currentPos, float pitch, float yaw) {
         super.raycast(player, remaining, steps, distance, currentPos, pitch, yaw);
-        float offset = 0.3f+(1f/((float) steps/remaining));
-        if(player.getWorld().getBlockState(BlockPos.ofFloored(currentPos)).isAir()) player.getWorld().setBlockState(BlockPos.ofFloored(currentPos), Blocks.WATER.getDefaultState());
-        ParticleHelper.spawnParticlesAtPosition(player.getWorld(), currentPos, ParticleTypes.SPLASH, 2, offset, offset, offset, 0);
+        player.getWorld().getOtherEntities(player, new Box(currentPos.add(-0.5, -0.5, -0.5), currentPos.add(0.5, 0.5, 0.5))).forEach((e) -> {
+            if(!(e instanceof ItemEntity)) e.damage((ServerWorld) e.getWorld(), new DamageSource(ModDamageTypes.of(e.getWorld(), ModDamageTypes.PULSAR_BEAM)), 5);
+        });
+        ParticleHelper.spawnParticlesAtPosition(player.getWorld(), currentPos, ParticleTypes.END_ROD, 3, 0.2, 0.2, 0.2, 0);
     }
 }

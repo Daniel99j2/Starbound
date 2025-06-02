@@ -6,6 +6,8 @@
     "ExampleMixin",
     "FloatingTicksAccessor",
     "ItemEntityMixin",
+    "LivingEntityMixin",
+    "PistonProgressAccessor",
     "PlayerEntityMixin",
     "ServerPlayerEntityMixin"
   ],

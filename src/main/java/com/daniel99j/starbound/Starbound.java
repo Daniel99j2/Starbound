@@ -5,8 +5,11 @@ import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.ModBlocks;
 import com.daniel99j.starbound.item.ModItems;
 import com.daniel99j.starbound.magic.PrismLensTrailManager;
+import com.daniel99j.starbound.magic.spell.DeathRaySpell;
 import com.daniel99j.starbound.magic.spell.Spells;
 import com.daniel99j.starbound.misc.GuiTextures;
+import com.daniel99j.starbound.mixin.PistonProgressAccessor;
+import de.tomalbrc.bil.file.loader.AjBlueprintLoader;
 import eu.pb4.polymer.core.api.utils.PolymerUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
@@ -14,9 +17,14 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.PistonExtensionBlock;
+import net.minecraft.block.entity.PistonBlockEntity;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +62,12 @@ public class Starbound implements ModInitializer {
 
 		CommandRegistrationCallback.EVENT.register(((commandDispatcher, commandRegistryAccess, registrationEnvironment) -> {
 			commandDispatcher.getRoot().addChild(CommandManager.literal("test-starbound").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes((commandContext -> {
-				PolymerUtils.getFakeWorld().spawnEntity(EntityUtils.cloneEntity(EntityArgumentType.getEntity(commandContext, "entity")));
+				DeathRaySpell.ANIMATION_MODEL = AjBlueprintLoader.load(Identifier.of("starbound", "death_ray"));
+				ServerPlayerEntity player = commandContext.getSource().getPlayer();
+				player.getWorld().setBlockState(player.getBlockPos(), Blocks.MOVING_PISTON.getDefaultState());
+				PistonBlockEntity blockEntity = new PistonBlockEntity(player.getBlockPos(), Blocks.MOVING_PISTON.getDefaultState(), Blocks.TNT.getDefaultState(), Direction.NORTH, true, false);
+				((PistonProgressAccessor) blockEntity).setProgress(0);
+				player.getWorld().addBlockEntity(blockEntity);
 				return 1;
 			}))).build());
 		}));

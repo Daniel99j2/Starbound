@@ -12,8 +12,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-public class WaterSpell extends Spell {
-    public WaterSpell(Identifier id, int energyUsed, int cooldown) {
+public class TimeControlSpell extends Spell {
+    public TimeControlSpell(Identifier id, int energyUsed, int cooldown) {
         super(id, energyUsed, cooldown);
     }
 

@@ -24,9 +24,9 @@ public class StarboundPlayerData implements Component, ServerTickingComponent {
         if(nbt.contains("last_cast_spell")) {
             last_cast_spell = Spells.getSpells().stream()
                     .filter(spell -> spell.id.equals(nbt.get("last_cast_spell", Identifier.CODEC)
-                            .orElseThrow()))
+                            .orElse(Spells.getSpells().getFirst().id)))
                     .findFirst()
-                    .orElseThrow();
+                    .orElse(Spells.getSpells().getFirst());
         }
     }
 

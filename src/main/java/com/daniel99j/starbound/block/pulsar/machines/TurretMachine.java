@@ -23,6 +23,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4x3f;
@@ -49,28 +50,22 @@ public class TurretMachine extends PulsarRedirectorBlock {
     }
 
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        return Blocks.OBSIDIAN.getDefaultState();
-    }
-
-    @Override
-    public String getModel(World world, BlockAwareAttachment attachment) {
-        return "turret";
-    }
-
-    @Override
     public ElementHolder createElementHolder(ServerWorld world, BlockPos pos, BlockState initialBlockState) {
         return new PulsarPoweredModel(world, initialBlockState, pos) {
             private ItemDisplayElement extraBeamElement;
+            private ItemDisplayElement modelElement;
 
             @Override
             protected void updateAnimation(Direction facing, World world) {
                 super.updateAnimation(facing, world);
                 if(this.extraBeamElement == null) {
                     this.extraBeamElement = new ItemDisplayElement(ItemUtils.getBasicModelItemStack());
+                    this.extraBeamElement.setOffset(Vec3d.ZERO.add(0, 1, 0));
                     this.addElement(extraBeamElement);
                     this.extraBeamElement.setTeleportDuration(2);
                     this.extraBeamElement.setInterpolationDuration(2);
+                    this.modelElement = new ItemDisplayElement(ItemUtils.getBasicModelItemStack());
+                    this.addElement(modelElement);
                 };
 
                 this.extraBeamElement.setItem(ItemDisplayElementUtil.getModel(
@@ -78,6 +73,11 @@ public class TurretMachine extends PulsarRedirectorBlock {
                 ));
                 this.extraBeamElement.setInvisible(true);
                 this.extraBeamElement.setBrightness(Brightness.FULL);
+
+                this.modelElement.setItem(ItemDisplayElementUtil.getModel(
+                        Identifier.of(Starbound.MOD_ID, "block/turret")
+                ));
+                this.modelElement.setInvisible(true);
 
                 if (this.blockAware() != null && Objects.requireNonNull(this.blockAware()).isPartOfTheWorld()) {
                     int power = this.blockState().get(ModBlocks.PULSAR_POWER);
@@ -97,7 +97,7 @@ public class TurretMachine extends PulsarRedirectorBlock {
                         TurretBlockEntity turret = ((TurretBlockEntity) Objects.requireNonNull(world.getBlockEntity(Objects.requireNonNull(this.blockAware()).getBlockPos())));
 
                         double d = turret.getCurrentTarget().getX() - this.blockPos().toCenterPos().getX();
-                        double e = ((turret.getCurrentTarget().getEyeY()+turret.getCurrentTarget().getY())/2f) - this.blockPos().toCenterPos().getY();
+                        double e = ((turret.getCurrentTarget().getEyeY()+turret.getCurrentTarget().getY())/2f) - this.blockPos().toCenterPos().getY()+1;
                         double f = turret.getCurrentTarget().getZ() - this.blockPos().toCenterPos().getZ();
                         double g = Math.sqrt(d * d + f * f);
                         this.extraBeamElement.setPitch(MathHelper.wrapDegrees((float)(-(MathHelper.atan2(e, g) * 180.0F / (float)Math.PI))));

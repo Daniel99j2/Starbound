@@ -9,9 +9,14 @@ import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.EquippableComponent;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -25,15 +30,15 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class ModItems {
-    public static final Item WAND_ITEM = register("wand", WandItem::new, new Item.Settings().maxCount(1));
+    public static final Item WAND_ITEM = register("wand", WandItem::new, new Item.Settings().maxCount(1).attributeModifiers(new AttributeModifiersComponent(List.of(
+            new AttributeModifiersComponent.Entry(EntityAttributes.BLOCK_INTERACTION_RANGE, new EntityAttributeModifier(Identifier.of(Starbound.MOD_ID, "wand"), -1, EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL), AttributeModifierSlot.MAINHAND))))
+            .component(DataComponentTypes.TOOLTIP_DISPLAY, new TooltipDisplayComponent(false, new LinkedHashSet<>(List.of(DataComponentTypes.ATTRIBUTE_MODIFIERS)))));
     public static final Item GRAVITY_ANCHOR_ITEM = register("gravity_anchor", GravityAnchorItem::new, new Item.Settings().maxCount(1));
     public static final Item PULSAR_REDIRECTOR_BLOCK = register(ModBlocks.PULSAR_REDIRECTOR);
     public static final Item PULSAR_TRANSMITTER_BLOCK = register(ModBlocks.PULSAR_TRANSMITTER);
@@ -43,6 +48,8 @@ public class ModItems {
     public static final Item INVIS_CLOAK_ITEM = register("invisibility_cloak", InvisCloakItem::new, new Item.Settings().maxCount(1).component(DataComponentTypes.EQUIPPABLE, new EquippableComponent(EquipmentSlot.CHEST, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, Optional.ofNullable(INVIS_CLOAK_ASSET), Optional.empty(), Optional.empty(), true, true, false, true)));
     public static final Item ASTRAL_FABRICATOR_ITEM = register("astral_fabricator", AstralFabricatorItem::new, new Item.Settings().maxCount(1));
     public static final Item MYSTERIOUS_CORE_ITEM = register(ModBlocks.MYSTERIOUS_CORE);
+    public static final Item TURRET_ITEM = register(ModBlocks.TURRET);
+    public static final Item TEST_MACHINE_ITEM = register(ModBlocks.TEST_MACHINE);
 
     public static Item registerSpawnEgg(EntityType<? extends MobEntity> entityType) {
         return register(keyOf(entityType.getRegistryEntry().registryKey().getValue().getPath()+"_spawn_egg"), settings -> new PolymerSpawnEgg(entityType, settings), new Item.Settings());
