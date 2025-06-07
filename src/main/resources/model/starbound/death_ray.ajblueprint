@@ -1893,7 +1893,7 @@
 					"locked": false,
 					"visibility": true,
 					"autouv": 0,
-					"selected": true,
+					"selected": false,
 					"children": [
 						"0296e375-48d1-6ce4-52d2-ea996996e97b",
 						"a36b6902-a39f-5207-101e-ab8209169fcc",
@@ -1918,7 +1918,7 @@
 	],
 	"textures": [
 		{
-			"path": "C:\\Users\\dj\\Documents\\Modding\\Starbound\\src\\main\\resources\\assets\\starbound\\textures\\misc\\death_ray.png",
+			"path": "C:\\Users\\dj\\Documents\\Modding\\Starbound\\src\\main\\resources\\assets\\starbound\\textures\\other\\death_ray.png",
 			"name": "death_ray.png",
 			"folder": "block",
 			"namespace": "",
@@ -1931,7 +1931,7 @@
 			"particle": false,
 			"use_as_default": false,
 			"layers_enabled": true,
-			"sync_to_project": "",
+			"sync_to_project": "09d544f8-3377-102c-bffe-4db475372d94",
 			"render_mode": "default",
 			"render_sides": "auto",
 			"pbr_channel": "color",
@@ -1941,7 +1941,7 @@
 			"frame_interpolate": false,
 			"visible": true,
 			"internal": true,
-			"saved": true,
+			"saved": false,
 			"uuid": "8a47f7a5-72cf-90d5-57c7-828e0585ae3a",
 			"layers": [
 				{
@@ -1953,11 +1953,11 @@
 					"blend_mode": "default",
 					"width": 32,
 					"height": 32,
-					"data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAALVJREFUWEft1cENwiAUxnGeohBPjba6gFt0C7dwC93CLRyCxC3cwYuHSh/0zuGZLyHh8nom6Y8/j0AhhGwafqQALaAFtIAWaF7gEzP0Fkzf6Yw8HafOv6X1hAI4mhEBHHb0qgqYE18QQO/ssyogZXNFAPstPaoCYko3BDC49b0ugFncUfmzwVuxGDyEP2bxTEvA0VtxZmDAnLI41SWgdyvx1sCAbkOEzMC/tQrQAlpAC2iB5gUW7XOVgcm5Ak8AAAAASUVORK5CYII="
+					"data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArRJREFUWEftlbGLE0EUxr+Z2ezmklyS3UsU7IR0IhaCjRa2CjaK2IidopUIFoKVYCd2glZiJ9go+Ccc2FlaefZyudskl01MLtn5ZHaTXHIcu0x1TdL8dvPevve9jze7Ynt7mzjFn1gLWDuwdmDtwNqBU3eA/O3t7ACtVovALwAXCPwEcHn+jVjhbm983ubTcbZe/JOVL7rdrl+r1djtdlGv19npdOD7PsMwRBAE3NvbQ6PRYLvdRrPZZPgPl2wEbJXEj0wBg0H7HIYASkgmJTmbOOXRfZlAhLHbvGYjoOE5XzMF9Hq7Lc9zORoBxSISeh6IMQCPxAhAEQnpeRw5GzdtBASu+JApIAr/XmTBJSaAWyAPD036IeC6NIDLRAzd1KGx59+zEdD01KtMAcNh70pqddoguZpdLLMAcgJgqDYfWQkoOk8yBfQ77euO43CKKRwYTuDQ4WRxP/8fcBwykrXnNgLOFJ3bOUsY3jAJimpJhGlq7uNjBEaFaqalx5s1PHk124Hu/h2lyHgKKKU4jeOE8XFiCgXFcjX4buNAXq6IovC+KRwjhpSKWqeEjgHDOAaUnFGxVKp/yStqExeDg/2HJy1d2lSDkAQ0IGUiqlJtfLJpkJcrhlHnKeYnQIGIk4VIaJyIdQy1oGSxXH+fV9QmLqKD8EUyYTJpeg5XuXosK9WttzYN8nLFoN9JtlpKUBsdCzFzUUeUUnKj7L/OK2oTF9HB/hspBbUmUmqYRkbMXJSQIDUghGR5s/7SpkFerhj2O+/MCggpSL1EIdLNELMNMTTfrIr/LK+oTdw48HExoZQ0o5tJNTWkENTkCsubwWObBnm5IuqHn5MdAIzLCZOHlidPAzTrUaoGD/KK2sTFoB9+O3nrZ+d/9h7QBGSyA/5dmwZ5uWIQhVav1nIluJVX1Cb+H+shkJAHTbazAAAAAElFTkSuQmCC"
 				}
 			],
-			"relative_path": "../../assets/starbound/textures/misc/death_ray.png",
-			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAALVJREFUWEft1cENwiAUxnGeohBPjba6gFt0C7dwC93CLRyCxC3cwYuHSh/0zuGZLyHh8nom6Y8/j0AhhGwafqQALaAFtIAWaF7gEzP0Fkzf6Yw8HafOv6X1hAI4mhEBHHb0qgqYE18QQO/ssyogZXNFAPstPaoCYko3BDC49b0ugFncUfmzwVuxGDyEP2bxTEvA0VtxZmDAnLI41SWgdyvx1sCAbkOEzMC/tQrQAlpAC2iB5gUW7XOVgcm5Ak8AAAAASUVORK5CYII="
+			"source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArRJREFUWEftlbGLE0EUxr+Z2ezmklyS3UsU7IR0IhaCjRa2CjaK2IidopUIFoKVYCd2glZiJ9go+Ccc2FlaefZyudskl01MLtn5ZHaTXHIcu0x1TdL8dvPevve9jze7Ynt7mzjFn1gLWDuwdmDtwNqBU3eA/O3t7ACtVovALwAXCPwEcHn+jVjhbm983ubTcbZe/JOVL7rdrl+r1djtdlGv19npdOD7PsMwRBAE3NvbQ6PRYLvdRrPZZPgPl2wEbJXEj0wBg0H7HIYASkgmJTmbOOXRfZlAhLHbvGYjoOE5XzMF9Hq7Lc9zORoBxSISeh6IMQCPxAhAEQnpeRw5GzdtBASu+JApIAr/XmTBJSaAWyAPD036IeC6NIDLRAzd1KGx59+zEdD01KtMAcNh70pqddoguZpdLLMAcgJgqDYfWQkoOk8yBfQ77euO43CKKRwYTuDQ4WRxP/8fcBwykrXnNgLOFJ3bOUsY3jAJimpJhGlq7uNjBEaFaqalx5s1PHk124Hu/h2lyHgKKKU4jeOE8XFiCgXFcjX4buNAXq6IovC+KRwjhpSKWqeEjgHDOAaUnFGxVKp/yStqExeDg/2HJy1d2lSDkAQ0IGUiqlJtfLJpkJcrhlHnKeYnQIGIk4VIaJyIdQy1oGSxXH+fV9QmLqKD8EUyYTJpeg5XuXosK9WttzYN8nLFoN9JtlpKUBsdCzFzUUeUUnKj7L/OK2oTF9HB/hspBbUmUmqYRkbMXJSQIDUghGR5s/7SpkFerhj2O+/MCggpSL1EIdLNELMNMTTfrIr/LK+oTdw48HExoZQ0o5tJNTWkENTkCsubwWObBnm5IuqHn5MdAIzLCZOHlidPAzTrUaoGD/KK2sTFoB9+O3nrZ+d/9h7QBGSyA/5dmwZ5uWIQhVav1nIluJVX1Cb+H+shkJAHTbazAAAAAElFTkSuQmCC",
+			"relative_path": "../../assets/starbound/textures/other/death_ray.png"
 		}
 	],
 	"variants": {
@@ -1977,7 +1977,7 @@
 			"name": "blast",
 			"loop": "hold",
 			"override": false,
-			"length": 5,
+			"length": 4.7,
 			"snapping": 20,
 			"selected": true,
 			"saved": false,
@@ -2046,9 +2046,9 @@
 							"channel": "scale",
 							"data_points": [
 								{
-									"x": "1",
+									"x": "1.01",
 									"y": "1000",
-									"z": "1"
+									"z": "1.01"
 								}
 							],
 							"uuid": "6554dc84-2859-addc-f4be-1b6cbd23ec7e",
@@ -2063,9 +2063,9 @@
 							"channel": "scale",
 							"data_points": [
 								{
-									"x": "1",
+									"x": "1.01",
 									"y": "1000",
-									"z": "1"
+									"z": "1.01"
 								}
 							],
 							"uuid": "be5edd32-f006-38ee-8a27-5f8f3653ccf9",
@@ -2074,7 +2074,7 @@
 							"uniform": false,
 							"interpolation": "linear",
 							"easing": "linear",
-							"easingArgs": []
+							"easingArgs": [1]
 						},
 						{
 							"channel": "scale",
@@ -2183,27 +2183,10 @@
 								}
 							],
 							"uuid": "412e1412-20be-cb77-180b-505658cad208",
-							"time": 0,
-							"color": -1,
-							"uniform": false,
-							"interpolation": "linear",
-							"easing": "linear",
-							"easingArgs": []
-						},
-						{
-							"channel": "scale",
-							"data_points": [
-								{
-									"x": "1",
-									"y": "0",
-									"z": "1"
-								}
-							],
-							"uuid": "31af03a2-564d-9557-360d-897543921139",
 							"time": 0.5,
 							"color": -1,
 							"uniform": false,
-							"interpolation": "catmullrom",
+							"interpolation": "linear",
 							"easing": "linear",
 							"easingArgs": []
 						},
@@ -2221,8 +2204,8 @@
 							"color": -1,
 							"uniform": false,
 							"interpolation": "catmullrom",
-							"easing": "linear",
-							"easingArgs": []
+							"easing": "easeOutCirc",
+							"easingArgs": [1]
 						},
 						{
 							"channel": "scale",
@@ -2257,6 +2240,23 @@
 							"interpolation": "linear",
 							"easing": "linear",
 							"easingArgs": []
+						},
+						{
+							"channel": "scale",
+							"data_points": [
+								{
+									"x": "1",
+									"y": "1.4",
+									"z": "1"
+								}
+							],
+							"uuid": "112f7668-5c2d-9330-ce4e-c8ed2f119322",
+							"time": 2.25,
+							"color": -1,
+							"uniform": false,
+							"interpolation": "catmullrom",
+							"easing": "easeOutCirc",
+							"easingArgs": [1]
 						}
 					]
 				},

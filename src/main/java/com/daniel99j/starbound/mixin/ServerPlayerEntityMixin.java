@@ -1,9 +1,12 @@
 package com.daniel99j.starbound.mixin;
 
+import com.daniel99j.lib99j.Lib99j;
+import com.daniel99j.lib99j.api.EntityUtils;
 import com.daniel99j.starbound.gui.SpellSelectorGui;
 import com.daniel99j.starbound.item.ModItems;
 import com.daniel99j.starbound.magic.BlueprintManager;
 import com.daniel99j.starbound.misc.ModEntityComponents;
+import com.daniel99j.starbound.misc.PossessionAccessor;
 import com.mojang.authlib.GameProfile;
 import eu.pb4.polymer.core.api.entity.PolymerEntity;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
@@ -14,21 +17,30 @@ import eu.pb4.polymer.virtualentity.api.elements.InteractionElement;
 import eu.pb4.polymer.virtualentity.api.elements.MobAnchorElement;
 import eu.pb4.polymer.virtualentity.api.elements.VirtualElement;
 import eu.pb4.sgui.virtual.hotbar.HotbarScreenHandler;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityAttributesS2CPacket;
+import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
+import net.minecraft.server.command.GameModeCommand;
+import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.PlayerInput;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -39,7 +51,11 @@ import java.util.Set;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin
-        extends PlayerEntity implements PolymerEntity {
+        extends PlayerEntity implements PolymerEntity, PossessionAccessor {
+    @Shadow public ServerPlayNetworkHandler networkHandler;
+
+    @Shadow public abstract PlayerInput getPlayerInput();
+
     @Unique
     private ElementHolder starbound$holder;
     @Unique
@@ -70,6 +86,8 @@ public abstract class ServerPlayerEntityMixin
             return getPlayer().getPos().add(new Vec3d(accelerationVector.x, accelerationVector.y, accelerationVector.z));
         }
     };
+    @Unique
+    private LivingEntity starbound$possessedEntity;
 
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile) {
         super(world, pos, yaw, gameProfile);
@@ -159,6 +177,16 @@ public abstract class ServerPlayerEntityMixin
 
         this.starbound$blueprintManager.setHolder(this.starbound$holder);
         this.starbound$blueprintManager.tick();
+
+        if(this.starbound$possessedEntity != null) {
+            this.starbound$possessedEntity.setJumping(this.getPlayerInput().jump());
+            this.starbound$possessedEntity.setSneaking(this.getPlayerInput().sneak());
+            this.starbound$possessedEntity.setSprinting(this.getPlayerInput().sprint());
+            if(this.getPlayerInput().forward()) EntityUtils.accelerateEntityPitchYaw(this.starbound$possessedEntity, this.starbound$possessedEntity.getMovementSpeed(), 0, this.starbound$possessedEntity.getYaw());
+            if(this.getPlayerInput().backward()) EntityUtils.accelerateEntityPitchYaw(this.starbound$possessedEntity, -this.starbound$possessedEntity.forwardSpeed, 0, this.starbound$possessedEntity.getYaw());
+            if(this.getPlayerInput().left()) EntityUtils.accelerateEntityPitchYaw(this.starbound$possessedEntity, this.starbound$possessedEntity.sidewaysSpeed, 0, this.starbound$possessedEntity.getYaw()-90);
+            if(this.getPlayerInput().right()) EntityUtils.accelerateEntityPitchYaw(this.starbound$possessedEntity, this.starbound$possessedEntity.sidewaysSpeed, 0, this.starbound$possessedEntity.getYaw()+90);
+        }
     }
 
     @Unique
@@ -166,15 +194,15 @@ public abstract class ServerPlayerEntityMixin
         return new VirtualElement.InteractionHandler() {
             @Override
             public void attack(ServerPlayerEntity player) {
-                if(starbound$shouldHaveWandInteraction()) {
+                if (starbound$shouldHaveWandInteraction()) {
                     new SpellSelectorGui(player).open();
                 }
             }
 
             @Override
             public void interact(ServerPlayerEntity player, Hand hand) {
-                if(starbound$shouldHaveWandInteraction() && hand == Hand.MAIN_HAND) {
-                    if(ModEntityComponents.PLAYER_DATA.get(player).getLastCastSpell() != null) {
+                if (starbound$shouldHaveWandInteraction() && hand == Hand.MAIN_HAND) {
+                    if (ModEntityComponents.PLAYER_DATA.get(player).getLastCastSpell() != null) {
                         Objects.requireNonNull(ModEntityComponents.PLAYER_DATA.get(player).getLastCastSpell()).baseCast(player);
                     }
                 }
@@ -206,5 +234,34 @@ public abstract class ServerPlayerEntityMixin
     @Override
     public boolean isOnGround() {
         return super.isOnGround() || this.starbound$airWalkShulker != null;
+    }
+
+    @Override
+    public void starbound$setPossessedBy(ServerPlayerEntity possessed) {
+        throw new IllegalStateException("Players cannot be possessed");
+    }
+
+    @Override
+    public void starbound$setPossessedEntity(LivingEntity possessed) {
+        if(possessed == this.getPlayer()) throw new IllegalStateException("Cannot possess self");
+        if(possessed == null && this.starbound$possessedEntity != null) {
+            ((PossessionAccessor) this.starbound$possessedEntity).starbound$setPossessedBy(null);
+        }
+        this.starbound$possessedEntity = possessed;
+
+        if(possessed == null) {
+
+        }
+
+        if(possessed != null) {
+            ((PossessionAccessor) possessed).starbound$setPossessedBy(this.getPlayer());
+            this.networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.GAME_MODE_CHANGED, GameMode.SPECTATOR.getIndex()));
+            this.networkHandler.sendPacket(VirtualEntityUtils.createSetCameraEntityPacket(possessed.getId()));
+        };
+    }
+
+    @Override
+    public LivingEntity starbound$getPossessingOrPossessedBy() {
+        return this.starbound$possessedEntity;
     }
 }

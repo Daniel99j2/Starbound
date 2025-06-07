@@ -3,12 +3,15 @@ package com.daniel99j.starbound;
 import com.daniel99j.lib99j.api.EntityUtils;
 import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.ModBlocks;
+import com.daniel99j.starbound.entity.ModEntities;
 import com.daniel99j.starbound.item.ModItems;
 import com.daniel99j.starbound.magic.PrismLensTrailManager;
 import com.daniel99j.starbound.magic.spell.DeathRaySpell;
 import com.daniel99j.starbound.magic.spell.Spells;
 import com.daniel99j.starbound.misc.GuiTextures;
+import com.daniel99j.starbound.misc.ModSounds;
 import com.daniel99j.starbound.mixin.PistonProgressAccessor;
+import com.daniel99j.starbound.particle.ModParticles;
 import de.tomalbrc.bil.file.loader.AjBlueprintLoader;
 import eu.pb4.polymer.core.api.utils.PolymerUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
@@ -49,6 +52,9 @@ public class Starbound implements ModInitializer {
 		ModItems.registerModItems();
 		ModBlockEntities.registerBlockEntities();
 		Spells.init();
+		ModEntities.register();
+		ModParticles.load();
+		ModSounds.load();
 
 		PolymerResourcePackUtils.addModAssets(MOD_ID);
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "block"), Identifier.of(MOD_ID, "gui"));

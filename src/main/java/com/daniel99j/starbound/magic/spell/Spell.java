@@ -1,14 +1,12 @@
 package com.daniel99j.starbound.magic.spell;
 
 import com.daniel99j.lib99j.api.ItemUtils;
-import com.daniel99j.lib99j.api.ParticleHelper;
-import net.fabricmc.loader.api.FabricLoader;
+import com.daniel99j.starbound.misc.ModSounds;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.component.type.UseCooldownComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -42,7 +40,7 @@ public abstract class Spell {
             if(b) {
                 castEffects(player);
             } else {
-                player.networkHandler.sendPacket(new PlaySoundS2CPacket(RegistryEntry.of(SoundEvents.BLOCK_FIRE_EXTINGUISH), SoundCategory.PLAYERS, player.getX(), player.getY(), player.getZ(), 1, 1, 0L));
+                player.networkHandler.sendPacket(new PlaySoundS2CPacket(RegistryEntry.of(ModSounds.SPELL_FAIL), SoundCategory.PLAYERS, player.getX(), player.getY(), player.getZ(), 1, 1, 0L));
             };
             return b;
         }
@@ -71,7 +69,7 @@ public abstract class Spell {
         return !player.getItemCooldownManager().isCoolingDown(this.getIcon());
     }
 
-    protected void raycast(ServerPlayerEntity player, int remaining, int steps, float distance, Vec3d currentPos, float pitch, float yaw) {
+    protected void raycast(ServerPlayerEntity player, int remaining, int steps, float distance, Vec3d currentPos, float pitch, float yaw, boolean hit) {
         if(remaining > 0) {
             double yawRad = Math.toRadians(yaw);
             double pitchRad = Math.toRadians(pitch);
@@ -85,9 +83,9 @@ public abstract class Spell {
             Vec3d newPos = currentPos.add(accelerationVector.x, accelerationVector.y, accelerationVector.z);
 
             if(!player.getWorld().getBlockState(BlockPos.ofFloored(newPos)).getCollisionShape(player.getWorld(), BlockPos.ofFloored(newPos)).isEmpty()) {
-                raycast(player, (remaining-1)/2, steps, distance, currentPos, pitch, yaw);
+                raycast(player, (remaining-1)/2, steps, distance, currentPos, pitch, yaw, true);
             } else {
-                raycast(player, remaining-1, steps, distance, newPos, pitch, yaw);
+                raycast(player, remaining-1, steps, distance, newPos, pitch, yaw, hit);
             }
 
         }

@@ -3,13 +3,9 @@ package com.daniel99j.starbound.magic.spell;
 import com.daniel99j.lib99j.api.ParticleHelper;
 import com.daniel99j.lib99j.api.SoundUtils;
 import com.daniel99j.starbound.misc.FullFrozenAccessor;
-import com.daniel99j.starbound.misc.ModDamageTypes;
+import com.daniel99j.starbound.misc.ModSounds;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -28,19 +24,19 @@ public class FreezeSpell extends Spell {
 
     @Override
     protected boolean cast(ServerPlayerEntity player) {
-        raycast(player, 20, 20, 0.5f, player.getEyePos(), player.getPitch(), player.getYaw());
+        raycast(player, 20, 20, 0.5f, player.getEyePos(), player.getPitch(), player.getYaw(), false);
         return true;
     }
 
     @Override
     protected void castEffects(ServerPlayerEntity player) {
         super.castEffects(player);
-        SoundUtils.playSoundAtPosition((ServerWorld) player.getWorld(), player.getEyePos(), SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, SoundCategory.PLAYERS, 1, 1);
+        SoundUtils.playSoundAtPosition((ServerWorld) player.getWorld(), player.getEyePos(), ModSounds.FREEZE_SPELL_CAST, SoundCategory.PLAYERS, 1, 1);
     }
 
     @Override
-    protected void raycast(ServerPlayerEntity player, int remaining, int steps, float distance, Vec3d currentPos, float pitch, float yaw) {
-        super.raycast(player, remaining, steps, distance, currentPos, pitch, yaw);
+    protected void raycast(ServerPlayerEntity player, int remaining, int steps, float distance, Vec3d currentPos, float pitch, float yaw, boolean hit) {
+        super.raycast(player, remaining, steps, distance, currentPos, pitch, yaw, hit);
         float offset = 0.3f+(1f/((float) steps/remaining));
         player.getWorld().getOtherEntities(player, new Box(currentPos.add(-offset, -offset, -offset), currentPos.add(offset, offset, offset))).forEach((e) -> {
             if(e instanceof LivingEntity livingEntity) ((FullFrozenAccessor) livingEntity).starbound$setFullFrozen(true);

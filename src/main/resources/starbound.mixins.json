@@ -7,9 +7,11 @@
     "FloatingTicksAccessor",
     "ItemEntityMixin",
     "LivingEntityMixin",
+    "MobEntityMixin",
     "PistonProgressAccessor",
     "PlayerEntityMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "ServerPlayNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

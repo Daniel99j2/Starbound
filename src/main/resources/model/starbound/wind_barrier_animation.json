@@ -1,0 +1,46 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"run": {
+			"animation_length": 1.5,
+			"bones": {
+				"bone": {
+					"position": [0, 0, -23]
+				},
+				"bone2": {
+					"position": [0, 0, 0]
+				},
+				"bone1": {
+					"position": [0, 0, -14]
+				},
+				"bone3": {
+					"position": [0, 0, 0]
+				},
+				"bone4": {
+					"position": [0, 0, 0]
+				},
+				"bone5": {
+					"position": {
+						"0.0": [-8, -19, 29],
+						"1.0": [0, 0, 0]
+					}
+				},
+				"bone6": {
+					"position": [0, 0, 0]
+				},
+				"bone7": {
+					"position": {
+						"0.0": [1, -20, 34],
+						"1.0": [0, 0, 0]
+					}
+				},
+				"bone8": {
+					"position": {
+						"0.0": [16, -12, 34],
+						"1.0": [0, 0, 0]
+					}
+				}
+			}
+		}
+	}
+}

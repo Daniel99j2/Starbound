@@ -1,6 +1,7 @@
 package com.daniel99j.starbound.mixin;
 
 import com.daniel99j.starbound.misc.FullFrozenAccessor;
+import com.daniel99j.starbound.misc.PossessionAccessor;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import eu.pb4.polymer.virtualentity.api.attachment.EntityAttachment;
 import eu.pb4.polymer.virtualentity.api.elements.*;
@@ -11,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.joml.Vector3f;
@@ -23,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin
-        extends Entity implements FullFrozenAccessor {
+        extends Entity implements FullFrozenAccessor, PossessionAccessor {
     @Shadow public abstract boolean addStatusEffect(StatusEffectInstance effect);
 
     @Unique
@@ -32,6 +34,8 @@ public abstract class LivingEntityMixin
     private BlockDisplayElement starbound$iceCube;
     @Unique
     private boolean starbound$isFullFrozen;
+    @Unique
+    private ServerPlayerEntity starbound$possessedBy;
 
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -83,5 +87,21 @@ public abstract class LivingEntityMixin
     @Override
     public void starbound$setFullFrozen(boolean fullFrozen) {
         starbound$isFullFrozen = fullFrozen;
+    }
+
+    @Override
+    public void starbound$setPossessedBy(ServerPlayerEntity possessed) {
+        if(this.getEntity() instanceof ServerPlayerEntity) throw new IllegalStateException("Cannot possess a player");
+        this.starbound$possessedBy = possessed;
+    }
+
+    @Override
+    public void starbound$setPossessedEntity(LivingEntity possessed) {
+        throw new IllegalStateException("Only players can possess entities");
+    }
+
+    @Override
+    public LivingEntity starbound$getPossessingOrPossessedBy() {
+        return this.starbound$possessedBy;
     }
 }

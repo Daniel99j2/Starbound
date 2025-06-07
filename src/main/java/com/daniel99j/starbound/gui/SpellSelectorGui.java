@@ -52,7 +52,7 @@ public class SpellSelectorGui extends HotbarGui {
                         } else {
                             ModEntityComponents.PLAYER_DATA.get(this.player).setLastCastSpell(s);
                             if (clickType.isRight) cast(s);
-                            else this.close();
+                            this.close();
                         }
                     }
                     build();

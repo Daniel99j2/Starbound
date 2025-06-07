@@ -7,15 +7,17 @@ import java.util.ArrayList;
 
 public class Spells {
     protected static final ArrayList<Spell> SPELLS = new ArrayList<>();
-    public static final Spell WATER_SPELL = new WaterSpell(Identifier.of(Starbound.MOD_ID, "water"), 1, 5);
     public static final Spell TELEPORT_SPELL = new PhaseSpell(Identifier.of(Starbound.MOD_ID, "teleport"), 1, 5);
     public static final Spell MAGNET_SPELL = new MagnetSpell(Identifier.of(Starbound.MOD_ID, "magnet"), 1, 5);
     public static final Spell DEATH_RAY_SPELL = new DeathRaySpell(Identifier.of(Starbound.MOD_ID, "death_ray"), 1, 5);
+    public static final Spell WATER_SPELL = new WaterSpell(Identifier.of(Starbound.MOD_ID, "water"), 1, 5);
     public static final Spell LIGHT_BEAM_SPELL = new LightBeamSpell(Identifier.of(Starbound.MOD_ID, "light_beam"), 1, 5);
     public static final Spell POSSESS_SPELL = new PossessSpell(Identifier.of(Starbound.MOD_ID, "possess"), 1, 5);
     public static final Spell TIME_CONTROL_SPELL = new TimeControlSpell(Identifier.of(Starbound.MOD_ID, "time_control"), 1, 5);
-    public static final Spell WIND_BARRIER_SPELL = new WindBarrier(Identifier.of(Starbound.MOD_ID, "wind_barrier"), 1, 5);
+    public static final Spell DUMMY_SPELL = new DummySpell(Identifier.of(Starbound.MOD_ID, "dummy"), 1, 5);
     public static final Spell FREEZE_SPELL = new FreezeSpell(Identifier.of(Starbound.MOD_ID, "freeze"), 1, 5);
+    public static final Spell CONFETTI_SPELL = new ConfettiSpell(Identifier.of(Starbound.MOD_ID, "confetti"), 1, 5);
+    public static final Spell SONIC_SPELL = new SonicBoomSpell(Identifier.of(Starbound.MOD_ID, "sonic"), 1, 5);
 
     public static void init() {
 

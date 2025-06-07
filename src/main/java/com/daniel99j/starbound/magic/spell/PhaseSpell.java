@@ -1,6 +1,7 @@
 package com.daniel99j.starbound.magic.spell;
 
 import com.daniel99j.lib99j.api.SoundUtils;
+import com.daniel99j.starbound.misc.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -57,7 +58,7 @@ public class PhaseSpell extends Spell {
             } else if (!collidesAtPos && hasBeenSolid) {
                 player.teleportTo(new TeleportTarget((ServerWorld) player.getWorld(), new Vec3d(currentPos.getX(), currentPos.getY() - player.getStandingEyeHeight(), currentPos.getZ()), Vec3d.ZERO, player.getYaw(), player.getPitch(), TeleportTarget.NO_OP));
                 player.getWorld().sendEntityStatus(player, EntityStatuses.ADD_PORTAL_PARTICLES);
-                SoundUtils.playSoundAtPosition((ServerWorld) player.getWorld(), player.getEyePos(), SoundEvents.ENTITY_PLAYER_TELEPORT, SoundCategory.PLAYERS, 1, 1);
+                SoundUtils.playSoundAtPosition((ServerWorld) player.getWorld(), player.getEyePos(), ModSounds.PHASE_SPELL_CAST, SoundCategory.PLAYERS, 1, 1);
                 currentCheck = true;
             } else raycastCustom(player, remaining - 1, distance, newPos, pitch, yaw, hasBeenSolid);
         }

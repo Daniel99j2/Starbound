@@ -1,6 +1,7 @@
 package com.daniel99j.starbound.block;
 
 import com.daniel99j.starbound.Starbound;
+import com.daniel99j.starbound.block.pulsar.DarknessBlock;
 import com.daniel99j.starbound.block.pulsar.PulsarRedirectorBlock;
 import com.daniel99j.starbound.block.pulsar.PulsarTransmitterBlock;
 import com.daniel99j.starbound.block.pulsar.machines.TestPulsarMachine;
@@ -52,6 +53,12 @@ public class ModBlocks {
             "mysterious_core",
             MysteriousCoreBlock::new,
             AbstractBlock.Settings.copy(Blocks.CONDUIT).pistonBehavior(PistonBehavior.NORMAL).sounds(BlockSoundGroup.SCULK).mapColor(MapColor.CLEAR).solid().nonOpaque()
+    );
+
+    public static final Block DARKNESS_BLOCK = registerBlock(
+            "darkness_block",
+            DarknessBlock::new,
+            AbstractBlock.Settings.copy(Blocks.BLACK_CONCRETE).nonOpaque().luminance((e) -> -15)
     );
 
     public static void registerBlocks() {
