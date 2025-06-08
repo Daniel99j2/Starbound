@@ -1,8 +1,7 @@
 package com.daniel99j.starbound.mixin;
 
-import com.daniel99j.lib99j.Lib99j;
 import com.daniel99j.lib99j.api.EntityUtils;
-import com.daniel99j.starbound.gui.SpellSelectorGui;
+import com.daniel99j.starbound.gui.WandHotbarGui;
 import com.daniel99j.starbound.item.ModItems;
 import com.daniel99j.starbound.magic.BlueprintManager;
 import com.daniel99j.starbound.misc.ModEntityComponents;
@@ -17,7 +16,6 @@ import eu.pb4.polymer.virtualentity.api.elements.InteractionElement;
 import eu.pb4.polymer.virtualentity.api.elements.MobAnchorElement;
 import eu.pb4.polymer.virtualentity.api.elements.VirtualElement;
 import eu.pb4.sgui.virtual.hotbar.HotbarScreenHandler;
-import it.unimi.dsi.fastutil.ints.IntList;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -26,11 +24,9 @@ import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.EntityAttributesS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
-import net.minecraft.server.command.GameModeCommand;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
@@ -195,7 +191,7 @@ public abstract class ServerPlayerEntityMixin
             @Override
             public void attack(ServerPlayerEntity player) {
                 if (starbound$shouldHaveWandInteraction()) {
-                    new SpellSelectorGui(player).open();
+                    new WandHotbarGui(player).open();
                 }
             }
 

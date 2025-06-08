@@ -44,8 +44,24 @@ public class AssetProvider implements DataProvider {
                 "cases": [
                   {
                     "model": {
-                      "type": "minecraft:model",
-                      "model": "%gui%"
+                      "type": "minecraft:composite",
+                      "models": [
+                        {
+                          "type": "minecraft:model",
+                          "model": "%gui%"
+                        },
+                        {
+                          "type": "minecraft:model",
+                          "model": "starbound:gui/spell/background",
+                          "tints": [
+                            {
+                              "type": "minecraft:custom_model_data",
+                              "index": 0,
+                              "default": 16385497
+                            }
+                          ]
+                        }
+                      ]
                     },
                     "when": [
                       "gui"
@@ -55,28 +71,56 @@ public class AssetProvider implements DataProvider {
                     "when": "firstperson_righthand",
                     "model": {
                       "type": "minecraft:model",
-                      "model": "%hand%"
+                      "model": "%hand%",
+                      "tints": [
+                        {
+                          "type": "minecraft:custom_model_data",
+                          "index": 0,
+                          "default": 16385497
+                        }
+                      ]
                     }
                   },
                   {
                     "when": "firstperson_lefthand",
                     "model": {
                       "type": "minecraft:model",
-                      "model": "%hand%"
+                      "model": "%hand%",
+                      "tints": [
+                        {
+                          "type": "minecraft:custom_model_data",
+                          "index": 0,
+                          "default": 16385497
+                        }
+                      ]
                     }
                   },
                   {
                     "when": "thirdperson_righthand",
                     "model": {
                       "type": "minecraft:model",
-                      "model": "%hand%"
+                      "model": "%hand%",
+                      "tints": [
+                        {
+                          "type": "minecraft:custom_model_data",
+                          "index": 0,
+                          "default": 16385497
+                        }
+                      ]
                     }
                   },
                   {
                     "when": "thirdperson_lefthand",
                     "model": {
                       "type": "minecraft:model",
-                      "model": "%hand%"
+                      "model": "%hand%",
+                      "tints": [
+                        {
+                          "type": "minecraft:custom_model_data",
+                          "index": 0,
+                          "default": 16385497
+                        }
+                      ]
                     }
                   }
                 ],
@@ -117,11 +161,16 @@ public class AssetProvider implements DataProvider {
                 SPELL_ITEM_FILE.replace("%gui%", "starbound:item/wand_gui").replace("%hand%", "starbound:item/wand_hand").replace("%other%", "starbound:item/wand_other").getBytes(StandardCharsets.UTF_8));
 
         for(Spell spell : Spells.getSpells()) {
-            assetWriter.accept("assets/" + spell.id.getNamespace() + "/models/gui/spell/" + spell.id.getPath() + ".json",
-                    BASIC_ITEM_TEMPLATE.replace("%ID%", spell.id.getNamespace() + ":spell/" + spell.id.getPath()).replace("%BASE%", "minecraft:item/generated").getBytes(StandardCharsets.UTF_8));
-            assetWriter.accept("assets/" + spell.id.getNamespace() + "/items/spell/" + spell.id.getPath() + ".json",
-                    SPELL_ITEM_FILE.replace("%gui%", spell.id.getNamespace() + ":gui/spell/" + spell.id.getPath()).replace("%hand%", "starbound:item/wand_hand").replace("%other%", "starbound:item/wand_other").getBytes(StandardCharsets.UTF_8));
+            generateSpellModel(spell.id, assetWriter);
         }
+        generateSpellModel(Identifier.of(Starbound.MOD_ID, "locked"), assetWriter);
+    }
+
+    private static void generateSpellModel(Identifier id, BiConsumer<String, byte[]> assetWriter) {
+        assetWriter.accept("assets/" + id.getNamespace() + "/models/gui/spell/" + id.getPath() + ".json",
+                BASIC_ITEM_TEMPLATE.replace("%ID%", id.getNamespace() + ":spell/" + id.getPath()).replace("%BASE%", "minecraft:item/generated").getBytes(StandardCharsets.UTF_8));
+        assetWriter.accept("assets/" + id.getNamespace() + "/items/spell/" + id.getPath() + ".json",
+                SPELL_ITEM_FILE.replace("%gui%", id.getNamespace() + ":gui/spell/" + id.getPath()).replace("%hand%", "starbound:item/wand_hand").replace("%other%", "starbound:item/wand_other").getBytes(StandardCharsets.UTF_8));
     }
 
     @Override

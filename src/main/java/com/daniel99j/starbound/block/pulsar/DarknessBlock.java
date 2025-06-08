@@ -29,4 +29,14 @@ public class DarknessBlock extends Block implements PolymerBlock {
     public boolean forceLightUpdates(BlockState blockState) {
         return true;
     }
+
+    @Override
+    protected boolean isTransparent(BlockState state) {
+        return false;
+    }
+
+    @Override
+    protected int getOpacity(BlockState state) {
+        return 15;
+    }
 }

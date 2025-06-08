@@ -6,10 +6,7 @@ import com.daniel99j.starbound.block.pulsar.PulsarRedirectorBlock;
 import com.daniel99j.starbound.block.pulsar.PulsarTransmitterBlock;
 import com.daniel99j.starbound.block.pulsar.machines.TestPulsarMachine;
 import com.daniel99j.starbound.block.pulsar.machines.TurretMachine;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -58,7 +55,7 @@ public class ModBlocks {
     public static final Block DARKNESS_BLOCK = registerBlock(
             "darkness_block",
             DarknessBlock::new,
-            AbstractBlock.Settings.copy(Blocks.BLACK_CONCRETE).nonOpaque().luminance((e) -> -15)
+            AbstractBlock.Settings.copy(Blocks.BLACK_CONCRETE).nonOpaque()
     );
 
     public static void registerBlocks() {

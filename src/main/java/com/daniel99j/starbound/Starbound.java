@@ -1,19 +1,19 @@
 package com.daniel99j.starbound;
 
-import com.daniel99j.lib99j.api.EntityUtils;
 import com.daniel99j.starbound.block.ModBlockEntities;
 import com.daniel99j.starbound.block.ModBlocks;
 import com.daniel99j.starbound.entity.ModEntities;
+import com.daniel99j.starbound.gui.SelectSpellGui;
 import com.daniel99j.starbound.item.ModItems;
 import com.daniel99j.starbound.magic.PrismLensTrailManager;
-import com.daniel99j.starbound.magic.spell.DeathRaySpell;
+import com.daniel99j.starbound.magic.spell.defensive.DeathRaySpell;
 import com.daniel99j.starbound.magic.spell.Spells;
 import com.daniel99j.starbound.misc.GuiTextures;
 import com.daniel99j.starbound.misc.ModSounds;
+import com.daniel99j.starbound.misc.ModStatusEffects;
 import com.daniel99j.starbound.mixin.PistonProgressAccessor;
 import com.daniel99j.starbound.particle.ModParticles;
 import de.tomalbrc.bil.file.loader.AjBlueprintLoader;
-import eu.pb4.polymer.core.api.utils.PolymerUtils;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.ResourcePackExtras;
 import net.fabricmc.api.ModInitializer;
@@ -21,14 +21,13 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.PistonExtensionBlock;
 import net.minecraft.block.entity.PistonBlockEntity;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,6 +54,7 @@ public class Starbound implements ModInitializer {
 		ModEntities.register();
 		ModParticles.load();
 		ModSounds.load();
+		ModStatusEffects.load();
 
 		PolymerResourcePackUtils.addModAssets(MOD_ID);
 		ResourcePackExtras.forDefault().addBridgedModelsFolder(Identifier.of(MOD_ID, "block"), Identifier.of(MOD_ID, "gui"));
@@ -66,14 +66,16 @@ public class Starbound implements ModInitializer {
 			PrismLensTrailManager.tick();
 		});
 
+		PolymerResourcePackUtils.RESOURCE_PACK_CREATION_EVENT.register((resourcePackBuilder) -> {
+			DeathRaySpell.ANIMATION_MODEL = AjBlueprintLoader.load(Identifier.of("starbound", "death_ray"));
+		});
+
 		CommandRegistrationCallback.EVENT.register(((commandDispatcher, commandRegistryAccess, registrationEnvironment) -> {
 			commandDispatcher.getRoot().addChild(CommandManager.literal("test-starbound").then(CommandManager.argument("entity", EntityArgumentType.entity()).executes((commandContext -> {
-				DeathRaySpell.ANIMATION_MODEL = AjBlueprintLoader.load(Identifier.of("starbound", "death_ray"));
-				ServerPlayerEntity player = commandContext.getSource().getPlayer();
-				player.getWorld().setBlockState(player.getBlockPos(), Blocks.MOVING_PISTON.getDefaultState());
-				PistonBlockEntity blockEntity = new PistonBlockEntity(player.getBlockPos(), Blocks.MOVING_PISTON.getDefaultState(), Blocks.TNT.getDefaultState(), Direction.NORTH, true, false);
-				((PistonProgressAccessor) blockEntity).setProgress(0);
-				player.getWorld().addBlockEntity(blockEntity);
+				new SelectSpellGui(commandContext.getSource().getPlayer(), true, (gui, spell, clicktype) -> {
+					gui.getPlayer().sendMessage(Text.of("clicked on "+spell.getName()), true);
+					gui.close();
+				}).open();
 				return 1;
 			}))).build());
 		}));

@@ -24,6 +24,16 @@ public class ModSounds {
     public static final SoundEvent LIGHT_BEAM_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "light_beam_spell_cast"), SoundEvents.ITEM_AXE_SCRAPE, true);
     public static final SoundEvent SONIC_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "sonic_spell_cast"), SoundEvents.ENTITY_WARDEN_SONIC_BOOM, true);
     public static final SoundEvent SONIC_SPELL_CAST_1 = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "sonic_spell_cast_1"), SoundEvents.ENTITY_WARDEN_SONIC_CHARGE, true);
+    public static final SoundEvent FIRE_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "fire_spell_cast"), SoundEvents.ITEM_FIRECHARGE_USE, true);
+    public static final SoundEvent LIGHTNING_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "lightning_spell_cast"), SoundEvents.ITEM_TRIDENT_THUNDER.value(), true);
+    public static final SoundEvent EARTHQUAKE_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "earthquake_spell_cast"), SoundEvents.ENTITY_GENERIC_EXPLODE.value(), true);
+    public static final SoundEvent VOID_RIFT_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "void_rift_spell_cast"), SoundEvents.BLOCK_END_PORTAL_SPAWN, true);
+    public static final SoundEvent HEALING_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "healing_spell_cast"), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, true);
+    public static final SoundEvent SHIELD_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "shield_spell_cast"), SoundEvents.ITEM_SHIELD_BLOCK.value(), true);
+    public static final SoundEvent GROW_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "grow_spell_cast"), SoundEvents.BLOCK_WET_GRASS_BREAK, true);
+    public static final SoundEvent LEVITATION_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "levitation_spell_cast"), SoundEvents.ENTITY_SHULKER_BULLET_HIT, true);
+    public static final SoundEvent TRANSMUTATION_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "transmutation_spell_cast"), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, true);
+    public static final SoundEvent TIME_WARP_SPELL_CAST = SoundUtils.registerCustomSubtitle(Identifier.of(Starbound.MOD_ID, "time_warp_spell_cast"), SoundEvents.BLOCK_BEACON_DEACTIVATE, true);
 
     public static void load() {
         

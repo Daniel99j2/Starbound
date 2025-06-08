@@ -2,8 +2,6 @@
   "block.starbound.pulsar_redirector": "Pulsar Redirector",
   "block.starbound.pulsar_transmitter": "Pulsar Transmitter",
   "item.starbound.wand": "Wand",
-  "spell.starbound.fire": "Fire",
-  "spell.starbound.fire.desc": "Unleashes a deadly vortex of flame and fire!",
   "death.attack.pulsarBeam": "%s was fried by a high-powered pulsar beam",
   "death.attack.pulsarBeam.player": "%s was hit into a high-powered pulsar beam by %s",
   "item.starbound.gravity_anchor": "Gravity Anchor",
@@ -11,5 +9,95 @@
   "item.starbound.astral_fabricator": "Astral Fabricator",
   "item.starbound.invisibility_cloak": "Cloak of Invisibility",
   "item.starbound.spellbook": "Spellbook",
-  "block.starbound.mysterious_core": "???"
+  "block.starbound.mysterious_core": "???",
+  "starbound.spell_energy_used": "Energy used: %s",
+  "starbound.spell_cooldown": "Cooldown: %ss",
+  "subtitles.starbound.spell_fail": "Casting fails",
+  "starbound.spell_locked": "Spell locked",
+
+  "_": "Spells",
+
+  "spell.starbound.phase": "Phase",
+  "spell.starbound.phase.desc": "Instantly warps you to a distant location.",
+  "subtitles.starbound.phase_spell_cast": "Phase spell cast",
+
+  "spell.starbound.magnet": "Magnet",
+  "spell.starbound.magnet.desc": "Pulls nearby items or entities toward you.",
+  "subtitles.starbound.magnet_spell_cast": "Magnet spell cast",
+
+  "spell.starbound.death_ray": "Death Ray",
+  "spell.starbound.death_ray.desc": "Fires a focused beam of destructive energy.",
+  "subtitles.starbound.death_ray_spell_cast": "Death Ray spell cast",
+
+  "spell.starbound.water": "Water",
+  "spell.starbound.water.desc": "Summons a surge of cleansing and forceful water.",
+  "subtitles.starbound.water_spell_cast": "Water spell cast",
+
+  "spell.starbound.light_beam": "Light Beam",
+  "spell.starbound.light_beam.desc": "Shoots a dazzling beam of radiant light.",
+  "subtitles.starbound.light_beam_spell_cast": "Light Beam spell cast",
+
+  "spell.starbound.fire": "Fire",
+  "spell.starbound.fire.desc": "Unleashes a deadly vortex of flame and fire.",
+  "subtitles.starbound.fire_spell_cast": "Fire spell cast",
+
+  "spell.starbound.possess": "Possess",
+  "spell.starbound.possess.desc": "Temporarily control the body of another being.",
+  "subtitles.starbound.possess_spell_cast": "Possession spell cast",
+
+  "spell.starbound.time_control": "Time Control",
+  "spell.starbound.time_control.desc": "Bend the flow of time to your will.",
+  "subtitles.starbound.time_control_spell_cast": "Time Control spell cast",
+
+  "spell.starbound.dummy": "Dummy",
+  "spell.starbound.dummy.desc": "Conjures a decoy to distract foes.",
+  "subtitles.starbound.dummy_spell_cast": "Dummy spell cast",
+
+  "spell.starbound.freeze": "Freeze",
+  "spell.starbound.freeze.desc": "Encases enemies in chilling ice.",
+  "subtitles.starbound.freeze_spell_cast": "Freeze spell cast",
+
+  "spell.starbound.confetti": "Confetti",
+  "spell.starbound.confetti.desc": "A burst of colorful fun with unexpected effects!",
+  "subtitles.starbound.confetti_spell_cast": "Confetti spell cast",
+
+  "spell.starbound.sonic": "Sonic Boom",
+  "spell.starbound.sonic.desc": "Shatters the air with a powerful sonic wave.",
+  "subtitles.starbound.sonic_spell_cast": "Sonic Boom spell cast",
+
+  "spell.starbound.lightning": "Lightning",
+  "spell.starbound.lightning.desc": "Calls down a bolt of raw electrical power.",
+  "subtitles.starbound.lightning_spell_cast": "Lightning spell cast",
+
+  "spell.starbound.float": "Float",
+  "spell.starbound.float.desc": "Lighten your body and drift gently above ground.",
+  "subtitles.starbound.float_spell_cast": "Float spell cast",
+
+  "spell.starbound.earthquake": "Earthquake",
+  "spell.starbound.earthquake.desc": "Shake the very earth beneath your foes.",
+  "subtitles.starbound.earthquake_spell_cast": "Earthquake spell cast",
+
+  "spell.starbound.void_rift": "Void Rift",
+  "spell.starbound.void_rift.desc": "Tear a hole into the void to pull in matter.",
+  "subtitles.starbound.void_rift_spell_cast": "Void Rift spell cast",
+
+  "spell.starbound.healing": "Healing",
+  "spell.starbound.healing.desc": "Restore health with soothing magic.",
+  "subtitles.starbound.healing_spell_cast": "Healing spell cast",
+
+  "spell.starbound.shield": "Shield",
+  "spell.starbound.shield.desc": "Create a magical barrier to block damage.",
+  "subtitles.starbound.shield_spell_cast": "Shield spell cast",
+
+  "spell.starbound.plant_grow": "Plant growth",
+  "spell.starbound.plant_grow.desc": "Accelerate the growth of natural life.",
+  "subtitles.starbound.plant_grow_spell_cast": "Grow plants spell cast",
+
+  "spell.starbound.levitation": "Levitation",
+  "spell.starbound.levitation.desc": "Float freely upward into the air.",
+  "subtitles.starbound.levitation_spell_cast": "Levitation spell cast",
+
+  "spell.starbound.transmutation": "Transmutation",
+  "spell.starbound.transmutation.desc": "Alter the properties of matter itself.",
+  "subtitles.starbound.transmutation_spell_cast": "Transmutation spell cast"
 }
